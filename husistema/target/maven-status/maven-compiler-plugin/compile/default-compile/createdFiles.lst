@@ -1,0 +1,14 @@
+br\unipar\husistema\model\Pessoa.class
+br\unipar\husistema\resource\imple\MedicoResourceImple.class
+br\unipar\husistema\model\Medico.class
+br\unipar\husistema\model\Paciente.class
+br\unipar\husistema\infra\DataBaseConectoin.class
+br\unipar\husistema\repository\MedicoRepository.class
+br\unipar\husistema\service\PacienteService.class
+br\unipar\husistema\repository\EnderecoRepository.class
+br\unipar\husistema\resource\ICRUDResource.class
+br\unipar\husistema\service\MedicoService.class
+br\unipar\husistema\model\Endereco.class
+br\unipar\husistema\model\enums\EspecialidadeEnum.class
+br\unipar\husistema\repository\PessoaRepository.class
+br\unipar\husistema\repository\PacienteRepository.class
