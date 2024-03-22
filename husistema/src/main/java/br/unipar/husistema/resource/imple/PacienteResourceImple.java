@@ -8,7 +8,7 @@ import br.unipar.husistema.service.validation.BancoDadosException;
 import br.unipar.husistema.service.validation.ValidacaoException;
 import java.util.List;
 
-@WebService(serviceName = "MedicoResourceImple")
+@WebService(serviceName = "PacienteResourceImple")
 public class PacienteResourceImple implements ICRUDResource<Paciente> {
     
     private final PacienteService service = new PacienteService();
