@@ -5,7 +5,7 @@ import br.unipar.husistema.model.enums.EspecialidadeEnum;
 public class Medico extends Pessoa {
     
     private String crm;
-    private Integer codEspecialidade;
+    private Integer especialidade;
     
     public Medico() {
         super();
@@ -14,7 +14,7 @@ public class Medico extends Pessoa {
     public Medico(Long id, String nome, String email, String telefone, Endereco endereco, String crm, EspecialidadeEnum especialidade) {
         super(id, nome, email, telefone, endereco);
         this.crm = crm;
-        this.codEspecialidade = especialidade.getCodigo();
+        this.especialidade = especialidade.getCodigo();
     }
 
     public String getCrm() {
@@ -25,11 +25,11 @@ public class Medico extends Pessoa {
         this.crm = crm;
     }
 
-    public EspecialidadeEnum getEspecialidade() {
-        return EspecialidadeEnum.paraEnum(codEspecialidade);
+    public Integer getEspecialidade() {
+        return especialidade;
     }
 
-    public void setCodEspecialidade(EspecialidadeEnum especialidade) {
-        this.codEspecialidade = especialidade.getCodigo();
+    public void setEspecialidade(Integer especialidade) {
+        this.especialidade = especialidade;
     }
 }

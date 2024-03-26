@@ -1,7 +1,8 @@
 package br.unipar.husistema.repository;
 
+import br.unipar.husistema.infraestructor.ConnectionFactory;
 import br.unipar.husistema.model.Medico;
-import br.unipar.husistema.model.enums.EspecialidadeEnum;
+import br.unipar.husistema.service.exception.ConexaoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,13 +29,25 @@ public class MedicoRepository {
     
     private final PessoaRepository pessoaRepository = new PessoaRepository();
     
-    public Medico inserir(Connection connection, PreparedStatement ps, ResultSet rs, Medico medico) throws SQLException {
-        medico.setId(pessoaRepository.inserir(connection, ps, rs, medico).getId());
-        ps = connection.prepareStatement(QUERY_INSERIR);
-        ps.setLong(1, medico.getId());
-        ps.setString(2, medico.getCrm());
-        ps.setInt(3, medico.getEspecialidade().getCodigo());
-        
+    public Medico inserir(Medico medico) throws ConexaoException {
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            try {
+                connection.setAutoCommit(true);
+                medico.setId(pessoaRepository.inserir(connection, medico).getId());
+                try (PreparedStatement ps = connection.prepareStatement(QUERY_INSERIR)) {
+                    ps.setLong(1, medico.getId());
+                    ps.setString(2, medico.getCrm());
+                    ps.setInt(3, medico.getEspecialidade());
+                    ps.execute();
+                }
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new ConexaoException("Conexão falhou!");
+            }
+        } catch (SQLException e) {
+           throw new ConexaoException("Conexão falhou!");
+        }
         return medico;
     }
     
@@ -48,7 +61,7 @@ public class MedicoRepository {
         
         if (rs.next()) {
             medico.setCrm(rs.getString(COLUNAS[1]));
-            medico.setCodEspecialidade(EspecialidadeEnum.paraEnum(rs.getInt(COLUNAS[2])));
+            medico.setEspecialidade(rs.getInt(COLUNAS[2]));
         }
          return medico;
     }
@@ -62,7 +75,7 @@ public class MedicoRepository {
             medico.setId(rs.getLong(COLUNAS[0]));
             medico = (Medico) pessoaRepository.acharPorId(connection, ps, rs, medico);
             medico.setCrm(rs.getString(COLUNAS[5]));
-            medico.setCodEspecialidade(EspecialidadeEnum.paraEnum(rs.getInt(COLUNAS[6])));
+            medico.setEspecialidade(rs.getInt(COLUNAS[6]));
             medicos.add(medico);
         }
         return medicos;        

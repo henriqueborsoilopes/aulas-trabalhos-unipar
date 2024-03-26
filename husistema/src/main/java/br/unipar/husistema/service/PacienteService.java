@@ -1,7 +1,6 @@
 package br.unipar.husistema.service;
 
-import br.unipar.husistema.infraestructor.DataBaseConectoin;
-import br.unipar.husistema.model.Medico;
+import br.unipar.husistema.infraestructor.ConnectionFactory;
 import br.unipar.husistema.model.Paciente;
 import br.unipar.husistema.repository.PacienteRepository;
 import java.sql.Connection;
@@ -20,7 +19,6 @@ public class PacienteService {
 
     public PacienteService() {
         this.repository = new PacienteRepository();
-        this.connection = DataBaseConectoin.getConnection();
     }
     
     public Paciente inserir(Paciente paciente) {

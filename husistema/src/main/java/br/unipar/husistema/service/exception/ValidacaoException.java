@@ -1,4 +1,4 @@
-package br.unipar.husistema.service.validation;
+package br.unipar.husistema.service.exception;
 
 public class ValidacaoException extends Exception {
     

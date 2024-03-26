@@ -1,6 +1,7 @@
 package br.unipar.husistema.repository;
 
 import br.unipar.husistema.model.Endereco;
+import br.unipar.husistema.service.exception.ConexaoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ public class EnderecoRepository {
         
     private static final String QUERY_INSERIR = ""
             + "INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, uf, cep) "
-            + "VALUES (?, ?, ?, ?, ?)";
+            + "VALUES (?, ?, ?, ?, ?, ?, ?)";
     
     private static final String QUERY_ACHAR_POR_ID = ""
             + "SELECT * "
@@ -25,18 +26,24 @@ public class EnderecoRepository {
             + "SET logradouro = ?, numero = ?, complemento = ?, bairro = ?, cidade = ?, uf = ?, cep = ? "
             + "WHERE id = ? ";
     
-    public Endereco inserir(Connection connection, PreparedStatement ps, ResultSet rs, Endereco endereco) throws SQLException {
-        ps = connection.prepareStatement(QUERY_INSERIR, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, endereco.getLogradouro());
-        ps.setString(2, endereco.getNumero());
-        ps.setString(3, endereco.getComplemento());
-        ps.setString(4, endereco.getBairro());
-        ps.setString(5, endereco.getCidade());
-        ps.setString(6, endereco.getUf());
-        ps.setString(7, endereco.getCep());
-        ps.executeUpdate();
-        ps.getGeneratedKeys();
-        endereco.setId(rs.getLong("id"));
+    public Endereco inserir(Connection connection, Endereco endereco) throws ConexaoException {
+        try (PreparedStatement ps = connection.prepareStatement(QUERY_INSERIR, Statement.RETURN_GENERATED_KEYS)){
+            ps.setString(1, endereco.getLogradouro());
+            ps.setString(2, endereco.getNumero());
+            ps.setString(3, endereco.getComplemento());
+            ps.setString(4, endereco.getBairro());
+            ps.setString(5, endereco.getCidade());
+            ps.setString(6, endereco.getUf());
+            ps.setString(7, endereco.getCep());
+            ps.execute();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    endereco.setId(rs.getLong("id"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ConexaoException("Conexão falhou!");
+        }
         return endereco;
     }
     

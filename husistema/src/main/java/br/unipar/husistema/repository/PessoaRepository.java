@@ -1,6 +1,7 @@
 package br.unipar.husistema.repository;
 
 import br.unipar.husistema.model.Pessoa;
+import br.unipar.husistema.service.exception.ConexaoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,11 +10,11 @@ import java.sql.Statement;
 
 public class PessoaRepository {
     
-    private static final String[] COLUNAS = {"id", "nome", "email", "telefone", "id_endereco"};
+    private static final String[] COLUNAS = {"id", "nome", "email", "telefone", "ativo", "id_endereco"};
         
     private static final String QUERY_INSERIR = ""
-            + "INSERT INTO pessoa (nome, email, telefone, id_endereco) "
-            + "VALUES (?, ?, ?, ?)";
+            + "INSERT INTO pessoa (nome, email, telefone, ativo, id_endereco) "
+            + "VALUES (?, ?, ?, ?, ?)";
     
     private static final String QUERY_ACHAR_POR_ID = ""
             + "SELECT * "
@@ -32,16 +33,23 @@ public class PessoaRepository {
     
     private final EnderecoRepository endRepository = new EnderecoRepository();
     
-    public Pessoa inserir(Connection connection, PreparedStatement ps, ResultSet rs, Pessoa pessoa) throws SQLException {
-        pessoa.setEndereco(endRepository.inserir(connection, ps, rs, pessoa.getEndereco()));
-        ps = connection.prepareStatement(QUERY_INSERIR, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, pessoa.getNome());
-        ps.setString(2, pessoa.getEmail());
-        ps.setString(3, pessoa.getTelefone());
-        ps.setLong(4, pessoa.getEndereco().getId());
-        rs = ps.getGeneratedKeys();
-        pessoa.setId(rs.getLong(COLUNAS[0]));
-        
+    public Pessoa inserir(Connection connection, Pessoa pessoa) throws ConexaoException {
+        pessoa.setEndereco(endRepository.inserir(connection, pessoa.getEndereco()));
+        try (PreparedStatement ps = connection.prepareStatement(QUERY_INSERIR, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, pessoa.getNome());
+            ps.setString(2, pessoa.getEmail());
+            ps.setString(3, pessoa.getTelefone());
+            ps.setBoolean(4, pessoa.isAtivo());
+            ps.setLong(5, pessoa.getEndereco().getId());
+            ps.execute();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    pessoa.setId(rs.getLong(COLUNAS[0]));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ConexaoException("Conexão falhou!");
+        }
         return pessoa;
     }
     

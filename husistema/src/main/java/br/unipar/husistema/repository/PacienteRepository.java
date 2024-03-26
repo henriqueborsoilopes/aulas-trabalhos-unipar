@@ -28,7 +28,7 @@ public class PacienteRepository {
     private final PessoaRepository pessoaRepository = new PessoaRepository();
     
     public Paciente inserir(Connection connection, PreparedStatement ps, ResultSet rs, Paciente paciente) throws SQLException {
-        paciente.setId(pessoaRepository.inserir(connection, ps, rs, paciente).getId());
+        //paciente.setId(pessoaRepository.inserir(connection, ps, rs, paciente).getId());
         ps = connection.prepareStatement(QUERY_INSERIR);
         ps.setLong(1, paciente.getId());
         ps.setString(2, paciente.getCpf());
