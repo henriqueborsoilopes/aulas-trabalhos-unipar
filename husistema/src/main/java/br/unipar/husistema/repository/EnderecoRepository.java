@@ -27,7 +27,9 @@ public class EnderecoRepository {
             ps.setString(7, endereco.getCep());
             ps.execute();
             try (ResultSet rs = ps.getGeneratedKeys()){
-                endereco.setId(rs.getLong("id"));
+                if (rs.next()) {
+                    endereco.setId(rs.getLong("id"));
+                }
                 return endereco;
             }
         }

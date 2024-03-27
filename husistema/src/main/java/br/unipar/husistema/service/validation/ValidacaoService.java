@@ -11,15 +11,17 @@ import java.util.List;
 
 public class ValidacaoService {
 
-    private static final List<Campo> campos = new ArrayList<>();
+    private static List<Campo> campos;
 
     public static void validarMedico(Medico medico) throws ValidacaoExcecao {
+        campos = new ArrayList<>();
+        
         if (medico == null) {
             campos.add(new Campo("Todos", "Devem ser preenchido!"));
             throw new ValidacaoExcecao(campos);
         }
 
-        if (medico.getCrm().isEmpty()) {
+        if (medico.getCrm().isEmpty() || medico.getCrm().isBlank()) {
             campos.add(new Campo("CRM", "Deve ser preenchido!"));
         }
 
@@ -35,16 +37,18 @@ public class ValidacaoService {
     }
 
     public static void validarPaciente(Paciente paciente) throws ValidacaoExcecao {
+        campos = new ArrayList<>();
+        
         if (paciente == null) {
             campos.add(new Campo("Todos", "Devem ser preenchido!"));
             throw new ValidacaoExcecao(campos);
         }
 
-        if (paciente.getNome().isEmpty()) {
+        if (paciente.getNome().isEmpty() || paciente.getNome().isBlank()) {
             campos.add(new Campo("Nome", "Deve ser preenchido!"));
         }
 
-        if (paciente.getEmail().isEmpty()) {
+        if (paciente.getEmail().isEmpty() || paciente.getEmail().isBlank()) {
             campos.add(new Campo("E-mail", "Deve ser preenchido!"));
         }
 
@@ -56,15 +60,15 @@ public class ValidacaoService {
     }
 
     private static void validarPessoa(Pessoa pessoa) {
-        if (pessoa.getNome().isEmpty()) {
+        if (pessoa.getNome().isEmpty() || pessoa.getNome().isBlank()) {
             campos.add(new Campo("Nome", "Deve ser preenchido!"));
         }
         
-        if (pessoa.getEmail().isEmpty()) {
+        if (pessoa.getEmail().isEmpty() || pessoa.getEmail().isBlank()) {
             campos.add(new Campo("E-mail", "Deve ser preenchido!"));
         }
         
-        if (pessoa.getTelefone().isEmpty()) {
+        if (pessoa.getTelefone().isEmpty() || pessoa.getTelefone().isBlank()) {
             campos.add(new Campo("Telefone", "Deve ser preenchido!"));
         }
         
@@ -72,24 +76,24 @@ public class ValidacaoService {
     }
     
     private static void validarEndereco(Endereco endereco) {
-        if (endereco.getLogradouro().isEmpty()) {
+        if (endereco.getLogradouro().isEmpty() || endereco.getLogradouro().isBlank()) {
             campos.add(new Campo("Logradouro", "Deve ser preenchido!"));
         }
         
-        if (endereco.getBairro().isEmpty()) {
-            campos.add(new Campo("Logradouro", "Deve ser preenchido!"));
+        if (endereco.getBairro().isEmpty() || endereco.getBairro().isBlank()) {
+            campos.add(new Campo("Bairro", "Deve ser preenchido!"));
         }
         
-        if (endereco.getCidade().isEmpty()) {
-            campos.add(new Campo("Logradouro", "Deve ser preenchido!"));
+        if (endereco.getCidade().isEmpty() || endereco.getCidade().isBlank()) {
+            campos.add(new Campo("Cidade", "Deve ser preenchido!"));
         }
         
-        if (endereco.getUf().isEmpty()) {
-            campos.add(new Campo("Logradouro", "Deve ser preenchido!"));
+        if (endereco.getUf().isEmpty() || endereco.getUf().isBlank()) {
+            campos.add(new Campo("UF", "Deve ser preenchido!"));
         }
         
-        if (endereco.getCep().isEmpty()) {
-            campos.add(new Campo("Logradouro", "Deve ser preenchido!"));
+        if (endereco.getCep().isEmpty() || endereco.getCep().isBlank()) {
+            campos.add(new Campo("CEP", "Deve ser preenchido!"));
         }
     }
 }

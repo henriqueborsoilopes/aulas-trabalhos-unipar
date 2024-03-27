@@ -1,14 +1,16 @@
 package br.unipar.husistema.service.exception;
 
+import jakarta.xml.ws.WebFault;
 import java.util.ArrayList;
 import java.util.List;
 
+@WebFault
 public class ValidacaoExcecao extends Exception {
         
-    private final List<Campo> campos = new ArrayList<>();
+    private List<Campo> campos = new ArrayList<>();
     
     public ValidacaoExcecao(List<Campo> campos) {
-        this.campos.addAll(campos);
+        this.campos = campos;
     }
 
     public List<Campo> getCampos() {

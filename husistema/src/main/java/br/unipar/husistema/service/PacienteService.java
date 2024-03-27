@@ -7,7 +7,6 @@ import br.unipar.husistema.repository.PacienteRepository;
 import br.unipar.husistema.repository.PessoaRepository;
 import br.unipar.husistema.service.validation.ValidacaoService;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PacienteService {

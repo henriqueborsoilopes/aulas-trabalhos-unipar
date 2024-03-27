@@ -3,15 +3,17 @@ package br.unipar.husistema.resource;
 import br.unipar.husistema.model.Consulta;
 import br.unipar.husistema.model.Medico;
 import br.unipar.husistema.model.Paciente;
+import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebService
 public interface IHUSistemaResource {
     
     @WebMethod
-    public Medico inserirMedico(Medico medico);
+    public Medico inserirMedico(Medico medico) throws ValidacaoExcecao, Exception;
     
     @WebMethod
     public List<Medico> acharTodosMedicos();
@@ -23,7 +25,7 @@ public interface IHUSistemaResource {
     public void excluirMedico(Long id);
     
     @WebMethod
-    public Paciente inserirPaciente(Paciente paciente);
+    public Paciente inserirPaciente(Paciente paciente) throws ValidacaoExcecao, Exception;
     
     @WebMethod
     public List<Paciente> acharTodosPacientes();

@@ -25,7 +25,9 @@ public class PessoaRepository {
             ps.setLong(5, pessoa.getEndereco().getId());
             ps.execute();
             try (ResultSet rs = ps.getGeneratedKeys()) {
-                pessoa.setId(rs.getLong(COLUNAS[0]));
+                if (rs.next()) {
+                    pessoa.setId(rs.getLong(COLUNAS[0]));
+                }
                 return pessoa;
             }
         }

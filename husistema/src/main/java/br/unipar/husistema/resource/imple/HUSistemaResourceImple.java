@@ -9,6 +9,10 @@ import java.util.List;
 import br.unipar.husistema.resource.IHUSistemaResource;
 import br.unipar.husistema.service.ConsultaService;
 import br.unipar.husistema.service.MedicoService;
+import br.unipar.husistema.service.exception.ValidacaoExcecao;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebService(serviceName = "HUSistemaResourceImple")
 public class HUSistemaResourceImple implements IHUSistemaResource {
@@ -24,7 +28,7 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
     
     @Override
-    public Medico inserirMedico(Medico medico) {
+    public Medico inserirMedico(Medico medico) throws ValidacaoExcecao, Exception {
         try {
            return medicoService.inserir(medico); 
         } catch (Exception e) {
@@ -62,13 +66,8 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
     
     @Override
-    public Paciente inserirPaciente(Paciente paciente) {
-        try {
-            return pacienteService.inserir(paciente);
-        } catch (Exception e) {
-            
-        }
-        return null;
+    public Paciente inserirPaciente(Paciente paciente) throws ValidacaoExcecao, Exception {
+        return pacienteService.inserir(paciente);
     }
 
     @Override
@@ -102,7 +101,7 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     @Override
     public Consulta inserirConsulta(Consulta consulta) {
         try {
-            return null;
+            return consultaService.inserir(consulta);
         } catch (Exception e) {
             
         }
@@ -112,7 +111,7 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     @Override
     public void atualizarConsulta(Long id, Consulta consulta) {
         try {
-            //consultaService.atualizar(id, consulta);
+            consultaService.atualizar(id, consulta);
         } catch (Exception e) {
             
         }
