@@ -2,96 +2,80 @@ package br.unipar.husistema.service;
 
 import br.unipar.husistema.infraestructor.ConnectionFactory;
 import br.unipar.husistema.model.Paciente;
+import br.unipar.husistema.repository.EnderecoRepository;
 import br.unipar.husistema.repository.PacienteRepository;
+import br.unipar.husistema.repository.PessoaRepository;
+import br.unipar.husistema.service.validation.ValidacaoService;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PacienteService {
     
-    private PacienteRepository repository = null;
-    private Connection connection = null;
-    private final PreparedStatement ps = null;
-    private final ResultSet rs = null;
+    private final PacienteRepository pacienteRepository;
+    private final PessoaRepository pessoaRepository;
+    private final EnderecoRepository enderecoRepository;
 
     public PacienteService() {
-        this.repository = new PacienteRepository();
+        this.pacienteRepository = new PacienteRepository();
+        this.pessoaRepository = new PessoaRepository();
+        this.enderecoRepository = new EnderecoRepository();
     }
     
-    public Paciente inserir(Paciente paciente) {
+    public Paciente inserir(Paciente paciente) throws Exception {
+        ValidacaoService.validarPaciente(paciente);
+        Connection connection = ConnectionFactory.getConnection();
         try {
             connection.setAutoCommit(false);
-            paciente = repository.inserir(connection, ps, rs, paciente);
+            paciente.setEndereco(enderecoRepository.inserir(connection, paciente.getEndereco()));
+            paciente.setId(pessoaRepository.inserir(connection, paciente).getId());
+            pacienteRepository.inserir(connection, paciente);
             connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-               System.out.println(ex.getMessage()); 
-            }
-            System.out.println(e.getMessage());
+            return paciente;
+        } catch (Exception e) {
+            connection.rollback();
+            throw new Exception(e);
         } finally {
-            try {
-                connection.close();
-                ps.close();
-                rs.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+            ConnectionFactory.closeConnection(connection);
         }
-        return paciente;
     }
     
-    public List<Paciente> acharTodos() {
-        List<Paciente> pacientes = new ArrayList<>();
+    public List<Paciente> acharTodos() throws Exception {
+        Connection connection = ConnectionFactory.getConnection();
         try {
-            pacientes = repository.acharTodos(connection, ps, rs);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return pacienteRepository.acharTodos(connection);
+        } catch (Exception e) {
+            throw new Exception(e);
         } finally {
-            try {
-                connection.close();
-                ps.close();
-                rs.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+            ConnectionFactory.closeConnection(connection);
         }
-        return pacientes;
     }
     
-    public void atualizar(Long id, Paciente paciente) {
+    public void atualizar(Long id, Paciente paciente) throws Exception {
+        ValidacaoService.validarPaciente(paciente);
+        Connection connection = ConnectionFactory.getConnection();
         try {
             paciente.setId(id);
-            repository.atualizar(connection, ps, paciente);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            connection.setAutoCommit(false);
+            enderecoRepository.atualizar(connection, paciente.getEndereco());
+            pessoaRepository.atualizar(connection, paciente);
+            connection.commit();
+        } catch (Exception e) {
+            connection.rollback();
+            throw new Exception(e);
         } finally {
-            try {
-                connection.close();
-                ps.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+            ConnectionFactory.closeConnection(connection);
         }
     }
     
-    public void excluir(Long id, boolean ativo) {
+    public void excluir(Long id) throws Exception {
+        Connection connection = ConnectionFactory.getConnection();
         try {
-            repository.excluir(connection, ps, rs, id, ativo);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            pessoaRepository.excluir(connection, id);
+        } catch (Exception e) {
+            throw new Exception(e);
         } finally {
-            try {
-                connection.close();
-                ps.close();
-                rs.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+            ConnectionFactory.closeConnection(connection);
         }
     }
 }
