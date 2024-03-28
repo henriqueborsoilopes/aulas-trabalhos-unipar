@@ -1,14 +1,14 @@
 package br.unipar.husistema.service.validation;
 
+import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.EnderecoDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
 import br.unipar.husistema.dto.MedicoDTO;
 import br.unipar.husistema.dto.PacienteDTO;
-import br.unipar.husistema.entity.Consulta;
-import br.unipar.husistema.entity.Paciente;
 import br.unipar.husistema.service.ConsultaService;
 import br.unipar.husistema.service.MedicoService;
 import br.unipar.husistema.service.PacienteService;
+import br.unipar.husistema.service.exception.BancoDadosException;
 import br.unipar.husistema.service.exception.Campo;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import java.time.LocalDateTime;
@@ -57,31 +57,31 @@ public class ValidacaoService {
         }
     }
 
-    public static void validarPaciente(PacienteDTO pacienteDTO) throws ValidacaoExcecao {
+    public static void validarPaciente(PacienteDTO dto) throws ValidacaoExcecao {
         campos = new ArrayList<>();
         
-        if (pacienteDTO == null) {
+        if (dto == null) {
             campos.add(new Campo("Todos", "Devem ser preenchido!"));
             throw new ValidacaoExcecao(campos);
         }
 
-        if (pacienteDTO.getNome().isEmpty() || pacienteDTO.getNome().isBlank()) {
+        if (dto.getNome().isEmpty() || dto.getNome().isBlank()) {
             campos.add(new Campo("Nome", "Deve ser preenchido!"));
         }
 
-        if (pacienteDTO.getEmail().isEmpty() || pacienteDTO.getEmail().isBlank()) {
+        if (dto.getEmail().isEmpty() || dto.getEmail().isBlank()) {
             campos.add(new Campo("E-mail", "Deve ser preenchido!"));
         }
         
-        if (pacienteDTO.getTelefone().isEmpty() || pacienteDTO.getTelefone().isBlank()) {
+        if (dto.getTelefone().isEmpty() || dto.getTelefone().isBlank()) {
             campos.add(new Campo("Telefone", "Deve ser preenchido!"));
         }
         
-        if (pacienteDTO.getCpf().isEmpty() || pacienteDTO.getCpf().isBlank()) {
+        if (dto.getCpf().isEmpty() || dto.getCpf().isBlank()) {
             campos.add(new Campo("Telefone", "Deve ser preenchido!"));
         }
         
-        validarEndereco(pacienteDTO.getEndereco());
+        validarEndereco(dto.getEndereco());
 
         if (!campos.isEmpty()) {
             throw new ValidacaoExcecao(campos);
@@ -111,7 +111,7 @@ public class ValidacaoService {
             if (!pacienteService.acharPorId(dto.getPacienteId()).isAtivo()) {
                 campos.add(new Campo("Paciente", "Paciente inativo!"));
             }
-        } catch (Exception e) {
+        } catch (BancoDadosException e) {
             campos.add(new Campo("Paciente", "Paciente não contrado!"));
         }
         
@@ -119,16 +119,16 @@ public class ValidacaoService {
             campos.add(new Campo("Paciente", "Paciente já possuí agendamento na data informada!"));
         }
         
-        if (dto.getMedicoId()!= null) {
-            if (consultaService.cansultarAgendamentoMedico(dto.getDataConsuta(), dto.getMedicoId())) {
+        if (consultaService.cansultarAgendamentoMedico(dto.getDataConsuta(), dto.getMedicoId())) {
             campos.add(new Campo("Médico", "Médico já possuí agendamento na data informada!"));
-            }
-            
+        }
+        
+        if (dto.getMedicoId()!= null) {
             try {
                 if (!medicoService.acharPorId(dto.getMedicoId()).isAtivo()) {
                     campos.add(new Campo("Médico", "Médico inativo!"));
                 }
-            } catch (Exception e) {
+            } catch (BancoDadosException e) {
                 campos.add(new Campo("Médico", "Médico não contrado!"));
             }
         } else {
@@ -141,41 +141,41 @@ public class ValidacaoService {
         }
     }
     
-    public void validarCancelamentoConsulta(Consulta consulta) throws ValidacaoExcecao {
+    public static void validarCancelamentoConsulta(CancelarConsultaDTO dto) throws ValidacaoExcecao {
         campos = new ArrayList<>();
         
-        if (consulta == null) {
+        if (dto == null) {
             campos.add(new Campo("Todos", "Devem ser preenchido!"));
             throw new ValidacaoExcecao(campos);
         }
         
-        if (consulta.getDataCancelamento().getHour() < 23) {
+        if (dto.getDataCancelamento().getHour() < 23) {
             campos.add(new Campo("Data Cancelamento", "O cancelamento deve ocorrer com antecedência mínima de 24 horas!"));
         }
         
-        if (consulta.getDescriCancelamento().isBlank() || consulta.getDescriCancelamento().isEmpty()) {
+        if (dto.getDescriCancelamento().isBlank() || dto.getDescriCancelamento().isEmpty()) {
             campos.add(new Campo("Descrição do Cancelamento", "É obrigatório o preenchimento da descrição do cancelamento!"));
         }
     }
     
-    private static void validarEndereco(EnderecoDTO enderecoDTO) {
-        if (enderecoDTO.getLogradouro().isEmpty() || enderecoDTO.getLogradouro().isBlank()) {
+    private static void validarEndereco(EnderecoDTO dto) {
+        if (dto.getLogradouro().isEmpty() || dto.getLogradouro().isBlank()) {
             campos.add(new Campo("Logradouro", "Deve ser preenchido!"));
         }
         
-        if (enderecoDTO.getBairro().isEmpty() || enderecoDTO.getBairro().isBlank()) {
+        if (dto.getBairro().isEmpty() || dto.getBairro().isBlank()) {
             campos.add(new Campo("Bairro", "Deve ser preenchido!"));
         }
         
-        if (enderecoDTO.getCidade().isEmpty() || enderecoDTO.getCidade().isBlank()) {
+        if (dto.getCidade().isEmpty() || dto.getCidade().isBlank()) {
             campos.add(new Campo("Cidade", "Deve ser preenchido!"));
         }
         
-        if (enderecoDTO.getUf().isEmpty() || enderecoDTO.getUf().isBlank()) {
+        if (dto.getUf().isEmpty() || dto.getUf().isBlank()) {
             campos.add(new Campo("UF", "Deve ser preenchido!"));
         }
         
-        if (enderecoDTO.getCep().isEmpty() || enderecoDTO.getCep().isBlank()) {
+        if (dto.getCep().isEmpty() || dto.getCep().isBlank()) {
             campos.add(new Campo("CEP", "Deve ser preenchido!"));
         }
     }

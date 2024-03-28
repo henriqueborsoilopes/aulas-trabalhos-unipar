@@ -1,5 +1,6 @@
 package br.unipar.husistema.factory;
 
+import br.unipar.husistema.service.exception.BancoDadosException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.naming.Context;
@@ -19,9 +20,8 @@ public class ConnectionFactory {
     public static Connection getConnection() {
         try {
             return getDataSource().getConnection();
-            
-        } catch (Exception e) {
-            
+        } catch (NamingException | SQLException e) {
+            System.out.println("Falha na conexão!");
         }
         return null;
     }
@@ -32,7 +32,7 @@ public class ConnectionFactory {
                 connection.close();
             }
         } catch (SQLException e) {
-            
+            System.out.println("Falha na conexão!");
         }
     }       
 }

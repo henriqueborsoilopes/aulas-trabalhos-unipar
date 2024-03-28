@@ -11,6 +11,7 @@ import br.unipar.husistema.resource.IHUSistemaResource;
 import br.unipar.husistema.service.ConsultaService;
 import br.unipar.husistema.service.MedicoService;
 import br.unipar.husistema.service.PessoaService;
+import br.unipar.husistema.service.exception.BancoDadosException;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 
 @WebService(serviceName = "HUSistemaResourceImple")
@@ -29,40 +30,23 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
     
     @Override
-    public void inativar(Long id) {
-        try {
-            pessoaService.inativar(id);
-        } catch (Exception e) {
-            
-        }
+    public void inativar(Long id) throws BancoDadosException {
+        pessoaService.inativar(id);
     }
     
     @Override
-    public void inserirMedico(MedicoDTO dto) throws ValidacaoExcecao, Exception {
-        try {
-           medicoService.inserir(dto); 
-        } catch (Exception e) {
-            
-        }
+    public void inserirMedico(MedicoDTO dto) throws ValidacaoExcecao, BancoDadosException {
+        medicoService.inserir(dto);
     }
 
     @Override
-    public List<MedicoDTO> acharTodosMedicos() {
-        try {
-            return medicoService.acharTodos();
-        } catch (Exception e) {
-            
-        }
-        return null;
+    public List<MedicoDTO> acharTodosMedicos() throws BancoDadosException {
+        return medicoService.acharTodos();
     }
     
     @Override
-    public void atualizarMedico(Long id, MedicoDTO dto) {
-        try {
-            medicoService.atualizar(id, dto);
-        } catch (Exception e) {
-            
-        }
+    public void atualizarMedico(Long id, MedicoDTO dto) throws BancoDadosException, ValidacaoExcecao {
+        medicoService.atualizar(id, dto);
     }
     
     @Override
@@ -71,39 +55,22 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
 
     @Override
-    public List<PacienteDTO> acharTodosPacientes() {
-        try {
-            return pacienteService.acharTodos();
-        } catch (Exception e) {
-            
-        }
-        return null;
+    public List<PacienteDTO> acharTodosPacientes() throws BancoDadosException {
+        return pacienteService.acharTodos();
     }
     
     @Override
-    public void atualizarPaciente(Long id, PacienteDTO dto) {
-        try {
-            pacienteService.atualizar(id, dto);
-        } catch (Exception e) {
-            
-        }
+    public void atualizarPaciente(Long id, PacienteDTO dto) throws BancoDadosException, ValidacaoExcecao {
+        pacienteService.atualizar(id, dto);
     }
 
     @Override
-    public void inserirConsulta(InserirConsultaDTO dto) {
-        try {
-            consultaService.inserir(dto);
-        } catch (Exception e) {
-            
-        }
+    public void inserirConsulta(InserirConsultaDTO dto) throws BancoDadosException, ValidacaoExcecao {
+        consultaService.inserir(dto);
     }
 
     @Override
-    public void cancelarConsulta(Long id, CancelarConsultaDTO dto) {
-        try {
-            consultaService.cancelar(id, dto);
-        } catch (Exception e) {
-            
-        }
+    public void cancelarConsulta(Long id, CancelarConsultaDTO dto) throws BancoDadosException, ValidacaoExcecao {
+        consultaService.cancelar(id, dto);
     }
 }
