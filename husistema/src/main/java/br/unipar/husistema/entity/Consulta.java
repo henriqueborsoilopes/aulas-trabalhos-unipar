@@ -1,4 +1,4 @@
-package br.unipar.husistema.model;
+package br.unipar.husistema.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -7,7 +7,8 @@ import java.util.Objects;
 public class Consulta implements Serializable {
     
     private Long id;
-    private LocalDateTime dataHora;
+    private LocalDateTime dataConsulta;
+    private LocalDateTime dataCancelamento;
     private String descriCancelamento;
     private boolean cancelado;
     
@@ -15,6 +16,16 @@ public class Consulta implements Serializable {
     private Paciente paciente;
     
     public Consulta() { }
+
+    public Consulta(Long id, LocalDateTime dataConsulta, LocalDateTime dataCancelamento, String descriCancelamento, boolean cancelado, Medico medico, Paciente paciente) {
+        this.id = id;
+        this.dataConsulta = dataConsulta;
+        this.dataCancelamento = dataCancelamento;
+        this.descriCancelamento = descriCancelamento;
+        this.cancelado = cancelado;
+        this.medico = medico;
+        this.paciente = paciente;
+    }
 
     public Long getId() {
         return id;
@@ -24,12 +35,20 @@ public class Consulta implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
+    public LocalDateTime getDataConsulta() {
+        return dataConsulta;
     }
 
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
+    public void setDataConsulta(LocalDateTime dataConsulta) {
+        this.dataConsulta = dataConsulta;
+    }
+
+    public LocalDateTime getDataCancelamento() {
+        return dataCancelamento;
+    }
+
+    public void setDataCancelamento(LocalDateTime dataCancelamento) {
+        this.dataCancelamento = dataCancelamento;
     }
 
     public String getDescriCancelamento() {
@@ -62,6 +81,10 @@ public class Consulta implements Serializable {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+    
+    public LocalDateTime getTerminoConsulta() {
+        return dataConsulta.plusHours(1);
     }
 
     @Override

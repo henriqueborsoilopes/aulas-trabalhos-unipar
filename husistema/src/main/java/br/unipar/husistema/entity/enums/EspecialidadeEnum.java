@@ -1,4 +1,4 @@
-package br.unipar.husistema.model.enums;
+package br.unipar.husistema.entity.enums;
 
 public enum EspecialidadeEnum {
     

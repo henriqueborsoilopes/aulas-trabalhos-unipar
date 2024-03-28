@@ -1,7 +1,7 @@
 package br.unipar.husistema.service;
 
 import br.unipar.husistema.infraestructor.ConnectionFactory;
-import br.unipar.husistema.model.Paciente;
+import br.unipar.husistema.entity.Paciente;
 import br.unipar.husistema.repository.EnderecoRepository;
 import br.unipar.husistema.repository.PacienteRepository;
 import br.unipar.husistema.repository.PessoaRepository;
@@ -39,6 +39,17 @@ public class PacienteService {
         }
     }
     
+    public Paciente acharPorId(Long id) throws Exception {
+        Connection connection = ConnectionFactory.getConnection();
+        try {
+            return pacienteRepository.acharPorId(connection, id);
+        } catch (Exception e) {
+            throw new Exception(e);
+        } finally {
+            ConnectionFactory.closeConnection(connection);
+        }
+    }
+    
     public List<Paciente> acharTodos() throws Exception {
         Connection connection = ConnectionFactory.getConnection();
         try {
@@ -67,10 +78,10 @@ public class PacienteService {
         }
     }
     
-    public void excluir(Long id) throws Exception {
+    public void inativar(Long id) throws Exception {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            pessoaRepository.excluir(connection, id);
+            pessoaRepository.inativar(connection, id);
         } catch (Exception e) {
             throw new Exception(e);
         } finally {

@@ -1,6 +1,6 @@
 package br.unipar.husistema.repository;
 
-import br.unipar.husistema.model.Pessoa;
+import br.unipar.husistema.entity.Pessoa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,7 +47,7 @@ public class PessoaRepository {
         }
     }
     
-    public void excluir(Connection connection, Long id) throws SQLException {
+    public void inativar(Connection connection, Long id) throws SQLException {
         String query = ""
             + "UPDATE " + TABELA + " "
             + "SET " + COLUNAS[4] + " = ? "

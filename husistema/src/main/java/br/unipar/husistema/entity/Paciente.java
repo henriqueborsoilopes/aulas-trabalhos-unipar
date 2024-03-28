@@ -1,4 +1,4 @@
-package br.unipar.husistema.model;
+package br.unipar.husistema.entity;
 
 public class Paciente extends Pessoa {
     
@@ -8,8 +8,8 @@ public class Paciente extends Pessoa {
         super();
     }
 
-    public Paciente(String cpf, Long id, String nome, String email, String telefone, Endereco endereco) {
-        super(id, nome, email, telefone, endereco);
+    public Paciente(Long id, String nome, String email, String telefone, boolean ativo, Endereco endereco, String cpf) {
+        super(id, nome, email, telefone, ativo, endereco);
         this.cpf = cpf;
     }
 

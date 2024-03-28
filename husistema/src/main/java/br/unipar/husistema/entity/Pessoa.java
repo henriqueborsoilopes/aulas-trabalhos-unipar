@@ -1,4 +1,4 @@
-package br.unipar.husistema.model;
+package br.unipar.husistema.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,12 +17,12 @@ public abstract class Pessoa implements Serializable {
         this.ativo = true;
     }
 
-    public Pessoa(Long id, String nome, String email, String telefone, Endereco endereco) {
+    public Pessoa(Long id, String nome, String email, String telefone, boolean ativo, Endereco endereco) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-        this.ativo = true;
+        this.ativo = ativo;
         this.endereco = endereco;
     }
 

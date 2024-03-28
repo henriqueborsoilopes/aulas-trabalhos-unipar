@@ -1,6 +1,6 @@
 package br.unipar.husistema.repository;
 
-import br.unipar.husistema.model.Endereco;
+import br.unipar.husistema.entity.Endereco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

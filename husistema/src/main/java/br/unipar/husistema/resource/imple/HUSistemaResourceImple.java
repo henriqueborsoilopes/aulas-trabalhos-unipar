@@ -1,18 +1,17 @@
 package br.unipar.husistema.resource.imple;
 
-import br.unipar.husistema.model.Consulta;
-import br.unipar.husistema.model.Medico;
-import br.unipar.husistema.model.Paciente;
+import br.unipar.husistema.dto.CancelarConsultaDTO;
+import br.unipar.husistema.dto.InserirConsultaDTO;
+import br.unipar.husistema.entity.Medico;
+import br.unipar.husistema.entity.Paciente;
 import jakarta.jws.WebService;
 import br.unipar.husistema.service.PacienteService;
 import java.util.List;
 import br.unipar.husistema.resource.IHUSistemaResource;
 import br.unipar.husistema.service.ConsultaService;
 import br.unipar.husistema.service.MedicoService;
+import br.unipar.husistema.service.PessoaService;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebService(serviceName = "HUSistemaResourceImple")
 public class HUSistemaResourceImple implements IHUSistemaResource {
@@ -20,21 +19,31 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     private final MedicoService medicoService;
     private final PacienteService pacienteService;
     private final ConsultaService consultaService;
+    private final PessoaService pessoaService;
     
     public HUSistemaResourceImple() {
         this.medicoService = new MedicoService();
         this.pacienteService = new PacienteService();
         this.consultaService = new ConsultaService();
+        this.pessoaService = new PessoaService();
     }
     
     @Override
-    public Medico inserirMedico(Medico medico) throws ValidacaoExcecao, Exception {
+    public void inativar(Long id) {
         try {
-           return medicoService.inserir(medico); 
+            pessoaService.inativar(id);
         } catch (Exception e) {
             
         }
-        return null;
+    }
+    
+    @Override
+    public void inserirMedico(Medico medico) throws ValidacaoExcecao, Exception {
+        try {
+           medicoService.inserir(medico); 
+        } catch (Exception e) {
+            
+        }
     }
 
     @Override
@@ -55,19 +64,10 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
             
         }
     }
-
-    @Override
-    public void excluirMedico(Long id) {
-        try {
-            medicoService.excluir(id);
-        } catch (Exception e) {
-            
-        }
-    }
     
     @Override
-    public Paciente inserirPaciente(Paciente paciente) throws ValidacaoExcecao, Exception {
-        return pacienteService.inserir(paciente);
+    public void inserirPaciente(Paciente paciente) throws ValidacaoExcecao, Exception {
+        pacienteService.inserir(paciente);
     }
 
     @Override
@@ -90,28 +90,18 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
 
     @Override
-    public void excluirPaciente(Long id) {
+    public void inserirConsulta(InserirConsultaDTO consultaDTO) {
         try {
-            pacienteService.excluir(id);
+            consultaService.inserir(consultaDTO);
         } catch (Exception e) {
             
         }
     }
 
     @Override
-    public Consulta inserirConsulta(Consulta consulta) {
+    public void cancelarConsulta(Long id, CancelarConsultaDTO consultaDTO) {
         try {
-            return consultaService.inserir(consulta);
-        } catch (Exception e) {
-            
-        }
-        return null;
-    }
-
-    @Override
-    public void atualizarConsulta(Long id, Consulta consulta) {
-        try {
-            consultaService.atualizar(id, consulta);
+            consultaService.cancelar(id, consultaDTO);
         } catch (Exception e) {
             
         }

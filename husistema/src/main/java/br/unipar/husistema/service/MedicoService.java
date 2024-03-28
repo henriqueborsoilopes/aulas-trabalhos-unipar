@@ -1,13 +1,12 @@
 package br.unipar.husistema.service;
 
 import br.unipar.husistema.infraestructor.ConnectionFactory;
-import br.unipar.husistema.model.Medico;
+import br.unipar.husistema.entity.Medico;
 import br.unipar.husistema.repository.EnderecoRepository;
 import br.unipar.husistema.repository.MedicoRepository;
 import br.unipar.husistema.repository.PessoaRepository;
 import br.unipar.husistema.service.validation.ValidacaoService;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MedicoService {
@@ -40,8 +39,29 @@ public class MedicoService {
         }
     }
     
+    public Long acharMedicoDisponivel() {
+        Connection connection = ConnectionFactory.getConnection();
+        try {
+            return medicoRepository.acharMedicoDisponivel(connection);
+        } catch (Exception e) {
+            return null;
+        } finally {
+            ConnectionFactory.closeConnection(connection);
+        }
+    }
+    
+    public Medico acharPorId(Long id) throws Exception {
+        Connection connection = ConnectionFactory.getConnection();
+        try {
+            return medicoRepository.acharPorId(connection, id);
+        } catch (Exception e) {
+            throw new Exception(e);
+        } finally {
+            ConnectionFactory.closeConnection(connection);
+        }
+    }
+    
     public List<Medico> acharTodos() throws Exception {
-        List<Medico> medicos = new ArrayList<>();
         Connection connection = ConnectionFactory.getConnection();
         try {
             return medicoRepository.acharTodos(connection);
@@ -69,10 +89,10 @@ public class MedicoService {
         }
     }
     
-    public void excluir(Long id) throws Exception {
+    public void inativar(Long id) throws Exception {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            pessoaRepository.excluir(connection, id);
+            pessoaRepository.inativar(connection, id);
         } catch (Exception e) {
             throw new Exception(e);
         } finally {

@@ -1,4 +1,4 @@
-package br.unipar.husistema.model;
+package br.unipar.husistema.entity;
 
 import java.io.Serializable;
 import java.util.Objects;

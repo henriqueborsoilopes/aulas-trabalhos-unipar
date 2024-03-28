@@ -1,0 +1,96 @@
+SELECT c.*, m.nome as nome_medico, p.nome as nome_paciente 
+FROM consulta c
+INNER JOIN pessoa m ON c.id_medico = m.id
+INNER JOIN pessoa p ON c.id_paciente = p.id
+WHERE c.id = 1;
+
+SELECT *
+FROM consulta
+WHERE Date(data_consuta) = '2024-03-30' AND id_paciente = 3 AND cancelado = false;
+
+SELECT *
+FROM consulta
+WHERE data_consuta < '2024-03-30 16:31:00' 
+OR (data_consuta + INTERVAL '1 hour' > '2024-03-30 16:31:00'
+AND data_consuta + INTERVAL '1 hour' > '2024-03-30 16:31:00' + INTERVAL '1 hour')
+AND id_medico = 1 
+AND cancelado = false;
+
+SELECT medico.* 
+FROM medico
+LEFT JOIN consulta c ON c.id_medico = medico.id_pessoa
+WHERE c.id_medico IS NULL;
+
+INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, uf, cep)
+VALUES ('Rua Senhor dos Passos', '410', 'Casa', 'Jardim Pancera', 'Toledo', 'PR', '85902196');
+
+INSERT INTO pessoa (nome, email, telefone, ativo, id_endereco)
+VALUES ('Henrique', 'henrique@gmail.com', '45999161342', true, 1);
+
+INSERT INTO pessoa (nome, email, telefone, ativo, id_endereco)
+VALUES ('Vitor', 'vitor@gmail.com', '45999161342', true, 1);
+
+INSERT INTO pessoa (nome, email, telefone, ativo, id_endereco)
+VALUES ('Gustavo', 'gustavo@gmail.com', '45999161342', true, 1);
+
+INSERT INTO medico (id_pessoa, crm, cod_especialidade)
+VALUES (1, '0000000/PR', 1);
+
+INSERT INTO medico (id_pessoa, crm, cod_especialidade)
+VALUES (2, '0000000/PR', 2);
+
+INSERT INTO paciente (id_pessoa, cpf)
+VALUES (3, '99999999999');
+
+INSERT INTO consulta (data_consuta, id_medico, id_paciente)
+VALUES ('2024-03-30 15:30:00', 1, 3);
+
+INSERT INTO consulta (data_consuta, id_medico, id_paciente)  
+VALUES ('2024-04-01 15:30:00', 2, 3);
+
+UPDATE consulta SET data_cancelamento = '2024-04-01 15:30:00', descri_cancelamento = 'Paciente desistiu', cancelado = true
+WHERE id = 2;
+
+create table endereco (
+	id serial not null primary key,
+	logradouro varchar(255),
+	numero varchar(255),
+	complemento varchar(255),
+	bairro varchar(255),
+	cidade varchar(255),
+	uf varchar(255),
+	cep varchar(255)
+);
+
+create table pessoa (
+	id serial not null primary key,
+    nome varchar(255),
+    email varchar(255),
+    telefone varchar(255),
+    ativo boolean,
+	id_endereco bigint,
+	constraint fk_id_endereco foreign key (id_endereco) references endereco(id)
+);
+
+create table medico (
+	id_pessoa bigint,
+	crm varchar(255),
+    tipo_especialidade varchar(255)
+);
+
+create table paciente (
+	id_pessoa bigint,
+	cpf varchar(255)
+);
+
+create table consulta (
+	id serial not null primary key,
+    data_consulta TIMESTAMP,
+    data_cancelamento TIMESTAMP,
+    descri_cancelamento varchar(255),
+    cancelado boolean,
+	id_medico bigint,
+	id_paciente bigint,
+	constraint fk_id_medico foreign key (id_medico) references pessoa(id),
+	constraint fk_id_paciente foreign key (id_paciente) references pessoa(id)
+);
