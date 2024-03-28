@@ -2,8 +2,8 @@ package br.unipar.husistema.resource.imple;
 
 import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
-import br.unipar.husistema.entity.Medico;
-import br.unipar.husistema.entity.Paciente;
+import br.unipar.husistema.dto.MedicoDTO;
+import br.unipar.husistema.dto.PacienteDTO;
 import jakarta.jws.WebService;
 import br.unipar.husistema.service.PacienteService;
 import java.util.List;
@@ -38,16 +38,16 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
     
     @Override
-    public void inserirMedico(Medico medico) throws ValidacaoExcecao, Exception {
+    public void inserirMedico(MedicoDTO dto) throws ValidacaoExcecao, Exception {
         try {
-           medicoService.inserir(medico); 
+           medicoService.inserir(dto); 
         } catch (Exception e) {
             
         }
     }
 
     @Override
-    public List<Medico> acharTodosMedicos() {
+    public List<MedicoDTO> acharTodosMedicos() {
         try {
             return medicoService.acharTodos();
         } catch (Exception e) {
@@ -57,21 +57,21 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
     
     @Override
-    public void atualizarMedico(Long id, Medico medico) {
+    public void atualizarMedico(Long id, MedicoDTO dto) {
         try {
-            medicoService.atualizar(id, medico);
+            medicoService.atualizar(id, dto);
         } catch (Exception e) {
             
         }
     }
     
     @Override
-    public void inserirPaciente(Paciente paciente) throws ValidacaoExcecao, Exception {
-        pacienteService.inserir(paciente);
+    public void inserirPaciente(PacienteDTO dto) throws ValidacaoExcecao, Exception {
+        pacienteService.inserir(dto);
     }
 
     @Override
-    public List<Paciente> acharTodosPacientes() {
+    public List<PacienteDTO> acharTodosPacientes() {
         try {
             return pacienteService.acharTodos();
         } catch (Exception e) {
@@ -81,27 +81,27 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
     
     @Override
-    public void atualizarPaciente(Long id, Paciente paciente) {
+    public void atualizarPaciente(Long id, PacienteDTO dto) {
         try {
-            pacienteService.atualizar(id, paciente);
+            pacienteService.atualizar(id, dto);
         } catch (Exception e) {
             
         }
     }
 
     @Override
-    public void inserirConsulta(InserirConsultaDTO consultaDTO) {
+    public void inserirConsulta(InserirConsultaDTO dto) {
         try {
-            consultaService.inserir(consultaDTO);
+            consultaService.inserir(dto);
         } catch (Exception e) {
             
         }
     }
 
     @Override
-    public void cancelarConsulta(Long id, CancelarConsultaDTO consultaDTO) {
+    public void cancelarConsulta(Long id, CancelarConsultaDTO dto) {
         try {
-            consultaService.cancelar(id, consultaDTO);
+            consultaService.cancelar(id, dto);
         } catch (Exception e) {
             
         }

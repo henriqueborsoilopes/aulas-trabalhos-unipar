@@ -1,6 +1,6 @@
 package br.unipar.husistema.service;
 
-import br.unipar.husistema.infraestructor.ConnectionFactory;
+import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.repository.PessoaRepository;
 import java.sql.Connection;
 

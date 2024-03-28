@@ -2,8 +2,8 @@ package br.unipar.husistema.resource;
 
 import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
-import br.unipar.husistema.entity.Medico;
-import br.unipar.husistema.entity.Paciente;
+import br.unipar.husistema.dto.MedicoDTO;
+import br.unipar.husistema.dto.PacienteDTO;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
@@ -16,26 +16,26 @@ public interface IHUSistemaResource {
     public void inativar(Long id);
     
     @WebMethod
-    public void inserirMedico(Medico medico) throws ValidacaoExcecao, Exception;
+    public void inserirMedico(MedicoDTO dto) throws ValidacaoExcecao, Exception;
     
     @WebMethod
-    public List<Medico> acharTodosMedicos();
+    public List<MedicoDTO> acharTodosMedicos();
     
     @WebMethod
-    public void atualizarMedico(Long id, Medico medico);
+    public void atualizarMedico(Long id, MedicoDTO dto);
     
     @WebMethod
-    public void inserirPaciente(Paciente paciente) throws ValidacaoExcecao, Exception;
+    public void inserirPaciente(PacienteDTO dto) throws ValidacaoExcecao, Exception;
     
     @WebMethod
-    public List<Paciente> acharTodosPacientes();
+    public List<PacienteDTO> acharTodosPacientes();
     
     @WebMethod
-    public void atualizarPaciente(Long id, Paciente paciente);
+    public void atualizarPaciente(Long id, PacienteDTO dto);
         
     @WebMethod
-    public void inserirConsulta(InserirConsultaDTO consultaDTO);
+    public void inserirConsulta(InserirConsultaDTO dto);
         
     @WebMethod
-    public void cancelarConsulta(Long id, CancelarConsultaDTO consultaDTO);
+    public void cancelarConsulta(Long id, CancelarConsultaDTO dto);
 }

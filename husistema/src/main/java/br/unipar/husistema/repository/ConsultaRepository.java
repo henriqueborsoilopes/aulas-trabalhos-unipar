@@ -75,7 +75,7 @@ public class ConsultaRepository {
         }
     }
     
-    public boolean cansultarAgendamentoPaciente(Connection connection, LocalDate data, Paciente paciente) throws SQLException {
+    public boolean cansultarAgendamentoPaciente(Connection connection, LocalDate data, Long id_paciente) throws SQLException {
         String query = ""
             + "SELECT * "
             + "FROM " + TABELA + " "
@@ -83,14 +83,14 @@ public class ConsultaRepository {
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setDate(1, Date.valueOf(data));
-            ps.setLong(2, paciente.getId());
+            ps.setLong(2, id_paciente);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
         }
     }
     
-    public boolean cansultarAgendamentoMedico(Connection connection, LocalDateTime data, Medico medico) throws SQLException {
+    public boolean cansultarAgendamentoMedico(Connection connection, LocalDateTime data, Long id_medico) throws SQLException {
         String query = ""
             + "SELECT * "
             + "FROM " + TABELA + " "
@@ -101,14 +101,14 @@ public class ConsultaRepository {
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setDate(1, new Date(Timestamp.valueOf(data).getTime()));
-            ps.setLong(2, medico.getId());
+            ps.setLong(2, id_medico);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
         }
     }
     
-    public void atualizar(Connection connection, Consulta consulta) throws SQLException {
+    public void cancelar(Connection connection, Consulta consulta) throws SQLException {
         String query = ""
             + "UPDATE " + TABELA + " "
             + "SET " + COLUNAS[2] + " = ?, " + COLUNAS[2] + " = ?, " + COLUNAS[4] + " "

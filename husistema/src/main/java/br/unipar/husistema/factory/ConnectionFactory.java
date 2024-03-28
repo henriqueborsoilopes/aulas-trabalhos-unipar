@@ -1,4 +1,4 @@
-package br.unipar.husistema.infraestructor;
+package br.unipar.husistema.factory;
 
 import java.sql.Connection;
 import java.sql.SQLException;

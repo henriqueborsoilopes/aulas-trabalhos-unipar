@@ -1,11 +1,11 @@
 package br.unipar.husistema.service.validation;
 
+import br.unipar.husistema.dto.EnderecoDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
+import br.unipar.husistema.dto.MedicoDTO;
+import br.unipar.husistema.dto.PacienteDTO;
 import br.unipar.husistema.entity.Consulta;
-import br.unipar.husistema.entity.Endereco;
-import br.unipar.husistema.entity.Medico;
 import br.unipar.husistema.entity.Paciente;
-import br.unipar.husistema.entity.Pessoa;
 import br.unipar.husistema.service.ConsultaService;
 import br.unipar.husistema.service.MedicoService;
 import br.unipar.husistema.service.PacienteService;
@@ -22,46 +22,66 @@ public class ValidacaoService {
     private static MedicoService medicoService;
     private static PacienteService pacienteService;
 
-    public static void validarMedico(Medico medico) throws ValidacaoExcecao {
+    public static void validarMedico(MedicoDTO dto) throws ValidacaoExcecao {
         campos = new ArrayList<>();
         
-        if (medico == null) {
+        if (dto == null) {
             campos.add(new Campo("Todos", "Devem ser preenchido!"));
             throw new ValidacaoExcecao(campos);
         }
 
-        if (medico.getCrm().isEmpty() || medico.getCrm().isBlank()) {
+        if (dto.getCrm().isEmpty() || dto.getCrm().isBlank()) {
             campos.add(new Campo("CRM", "Deve ser preenchido!"));
         }
 
-        if (medico.getTipoEspecialidade() == null) {
+        if (dto.getTipoEspecialidade() == null) {
             campos.add(new Campo("Especialidade", "Deve ser preenchido!"));
         }
+        
+        if (dto.getNome().isEmpty() || dto.getNome().isBlank()) {
+            campos.add(new Campo("Nome", "Deve ser preenchido!"));
+        }
 
-        validarPessoa(medico);
+        if (dto.getEmail().isEmpty() || dto.getEmail().isBlank()) {
+            campos.add(new Campo("E-mail", "Deve ser preenchido!"));
+        }
+        
+        if (dto.getTelefone().isEmpty() || dto.getTelefone().isBlank()) {
+            campos.add(new Campo("Telefone", "Deve ser preenchido!"));
+        }
+        
+        validarEndereco(dto.getEndereco());
 
         if (!campos.isEmpty()) {
             throw new ValidacaoExcecao(campos);
         }
     }
 
-    public static void validarPaciente(Paciente paciente) throws ValidacaoExcecao {
+    public static void validarPaciente(PacienteDTO pacienteDTO) throws ValidacaoExcecao {
         campos = new ArrayList<>();
         
-        if (paciente == null) {
+        if (pacienteDTO == null) {
             campos.add(new Campo("Todos", "Devem ser preenchido!"));
             throw new ValidacaoExcecao(campos);
         }
 
-        if (paciente.getNome().isEmpty() || paciente.getNome().isBlank()) {
+        if (pacienteDTO.getNome().isEmpty() || pacienteDTO.getNome().isBlank()) {
             campos.add(new Campo("Nome", "Deve ser preenchido!"));
         }
 
-        if (paciente.getEmail().isEmpty() || paciente.getEmail().isBlank()) {
+        if (pacienteDTO.getEmail().isEmpty() || pacienteDTO.getEmail().isBlank()) {
             campos.add(new Campo("E-mail", "Deve ser preenchido!"));
         }
-
-        validarPessoa(paciente);
+        
+        if (pacienteDTO.getTelefone().isEmpty() || pacienteDTO.getTelefone().isBlank()) {
+            campos.add(new Campo("Telefone", "Deve ser preenchido!"));
+        }
+        
+        if (pacienteDTO.getCpf().isEmpty() || pacienteDTO.getCpf().isBlank()) {
+            campos.add(new Campo("Telefone", "Deve ser preenchido!"));
+        }
+        
+        validarEndereco(pacienteDTO.getEndereco());
 
         if (!campos.isEmpty()) {
             throw new ValidacaoExcecao(campos);
@@ -137,41 +157,25 @@ public class ValidacaoService {
             campos.add(new Campo("Descrição do Cancelamento", "É obrigatório o preenchimento da descrição do cancelamento!"));
         }
     }
-
-    private static void validarPessoa(Pessoa pessoa) {
-        if (pessoa.getNome().isEmpty() || pessoa.getNome().isBlank()) {
-            campos.add(new Campo("Nome", "Deve ser preenchido!"));
-        }
-        
-        if (pessoa.getEmail().isEmpty() || pessoa.getEmail().isBlank()) {
-            campos.add(new Campo("E-mail", "Deve ser preenchido!"));
-        }
-        
-        if (pessoa.getTelefone().isEmpty() || pessoa.getTelefone().isBlank()) {
-            campos.add(new Campo("Telefone", "Deve ser preenchido!"));
-        }
-        
-        validarEndereco(pessoa.getEndereco());
-    }
     
-    private static void validarEndereco(Endereco endereco) {
-        if (endereco.getLogradouro().isEmpty() || endereco.getLogradouro().isBlank()) {
+    private static void validarEndereco(EnderecoDTO enderecoDTO) {
+        if (enderecoDTO.getLogradouro().isEmpty() || enderecoDTO.getLogradouro().isBlank()) {
             campos.add(new Campo("Logradouro", "Deve ser preenchido!"));
         }
         
-        if (endereco.getBairro().isEmpty() || endereco.getBairro().isBlank()) {
+        if (enderecoDTO.getBairro().isEmpty() || enderecoDTO.getBairro().isBlank()) {
             campos.add(new Campo("Bairro", "Deve ser preenchido!"));
         }
         
-        if (endereco.getCidade().isEmpty() || endereco.getCidade().isBlank()) {
+        if (enderecoDTO.getCidade().isEmpty() || enderecoDTO.getCidade().isBlank()) {
             campos.add(new Campo("Cidade", "Deve ser preenchido!"));
         }
         
-        if (endereco.getUf().isEmpty() || endereco.getUf().isBlank()) {
+        if (enderecoDTO.getUf().isEmpty() || enderecoDTO.getUf().isBlank()) {
             campos.add(new Campo("UF", "Deve ser preenchido!"));
         }
         
-        if (endereco.getCep().isEmpty() || endereco.getCep().isBlank()) {
+        if (enderecoDTO.getCep().isEmpty() || enderecoDTO.getCep().isBlank()) {
             campos.add(new Campo("CEP", "Deve ser preenchido!"));
         }
     }

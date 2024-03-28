@@ -1,7 +1,9 @@
 package br.unipar.husistema.service;
 
-import br.unipar.husistema.infraestructor.ConnectionFactory;
+import br.unipar.husistema.dto.PacienteDTO;
+import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.entity.Paciente;
+import br.unipar.husistema.mapper.PacienteMapper;
 import br.unipar.husistema.repository.EnderecoRepository;
 import br.unipar.husistema.repository.PacienteRepository;
 import br.unipar.husistema.repository.PessoaRepository;
@@ -14,15 +16,18 @@ public class PacienteService {
     private final PacienteRepository pacienteRepository;
     private final PessoaRepository pessoaRepository;
     private final EnderecoRepository enderecoRepository;
+    private final PacienteMapper pacienteMapper;
 
     public PacienteService() {
         this.pacienteRepository = new PacienteRepository();
         this.pessoaRepository = new PessoaRepository();
         this.enderecoRepository = new EnderecoRepository();
+        this.pacienteMapper = new PacienteMapper();
     }
     
-    public Paciente inserir(Paciente paciente) throws Exception {
-        ValidacaoService.validarPaciente(paciente);
+    public PacienteDTO inserir(PacienteDTO dto) throws Exception {
+        ValidacaoService.validarPaciente(dto);
+        Paciente paciente = pacienteMapper.getEntity(dto);
         Connection connection = ConnectionFactory.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -30,7 +35,7 @@ public class PacienteService {
             paciente.setId(pessoaRepository.inserir(connection, paciente).getId());
             pacienteRepository.inserir(connection, paciente);
             connection.commit();
-            return paciente;
+            return pacienteMapper.getDTO(paciente);
         } catch (Exception e) {
             connection.rollback();
             throw new Exception(e);
@@ -39,10 +44,10 @@ public class PacienteService {
         }
     }
     
-    public Paciente acharPorId(Long id) throws Exception {
+    public PacienteDTO acharPorId(Long id) throws Exception {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            return pacienteRepository.acharPorId(connection, id);
+            return pacienteMapper.getDTO(pacienteRepository.acharPorId(connection, id));
         } catch (Exception e) {
             throw new Exception(e);
         } finally {
@@ -50,10 +55,10 @@ public class PacienteService {
         }
     }
     
-    public List<Paciente> acharTodos() throws Exception {
+    public List<PacienteDTO> acharTodos() throws Exception {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            return pacienteRepository.acharTodos(connection);
+            return pacienteMapper.getLitDTO(pacienteRepository.acharTodos(connection));
         } catch (Exception e) {
             throw new Exception(e);
         } finally {
@@ -61,8 +66,9 @@ public class PacienteService {
         }
     }
     
-    public void atualizar(Long id, Paciente paciente) throws Exception {
-        ValidacaoService.validarPaciente(paciente);
+    public void atualizar(Long id, PacienteDTO dto) throws Exception {
+        ValidacaoService.validarPaciente(dto);
+        Paciente paciente = pacienteMapper.getEntity(dto);
         Connection connection = ConnectionFactory.getConnection();
         try {
             paciente.setId(id);
@@ -72,17 +78,6 @@ public class PacienteService {
             connection.commit();
         } catch (Exception e) {
             connection.rollback();
-            throw new Exception(e);
-        } finally {
-            ConnectionFactory.closeConnection(connection);
-        }
-    }
-    
-    public void inativar(Long id) throws Exception {
-        Connection connection = ConnectionFactory.getConnection();
-        try {
-            pessoaRepository.inativar(connection, id);
-        } catch (Exception e) {
             throw new Exception(e);
         } finally {
             ConnectionFactory.closeConnection(connection);
