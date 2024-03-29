@@ -4,23 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class CancelarConsultaDTO implements Serializable {
-    
-    private LocalDateTime dataCancelamento;
+
     private String descriCancelamento;
     
     public CancelarConsultaDTO() { }
 
-    public CancelarConsultaDTO(LocalDateTime dataCancelamento, String descriCancelamento) {
-        this.dataCancelamento = dataCancelamento;
+    public CancelarConsultaDTO(String descriCancelamento) {
         this.descriCancelamento = descriCancelamento;
-    }
-
-    public LocalDateTime getDataCancelamento() {
-        return dataCancelamento;
-    }
-
-    public void setDataCancelamento(LocalDateTime dataCancelamento) {
-        this.dataCancelamento = dataCancelamento;
     }
 
     public String getDescriCancelamento() {

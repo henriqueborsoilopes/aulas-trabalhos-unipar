@@ -1,7 +1,6 @@
 package br.unipar.husistema.service;
 
 import br.unipar.husistema.dto.CancelarConsultaDTO;
-import br.unipar.husistema.dto.ConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
 import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.entity.Consulta;
@@ -12,8 +11,10 @@ import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import br.unipar.husistema.service.validation.ValidacaoService;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class ConsultaService {
     
@@ -25,7 +26,7 @@ public class ConsultaService {
         this.consultaMapper = new ConsultaMapper();
     }
     
-    public ConsultaDTO inserir(InserirConsultaDTO dto) throws BancoDadosException, ValidacaoExcecao {
+    public Consulta inserir(InserirConsultaDTO dto) throws BancoDadosException, ValidacaoExcecao {
         ValidacaoService.validarConsulta(dto);
         Consulta consulta = consultaMapper.getEntity(dto);
         Connection connection = ConnectionFactory.getConnection();
@@ -33,7 +34,7 @@ public class ConsultaService {
             connection.setAutoCommit(false);
             consulta = consultaRepository.inserir(connection, consulta);
             connection.commit();
-            return consultaMapper.getDTO(consulta);
+            return consulta;
         } catch (SQLException e) {
             try {
                 connection.rollback();
@@ -46,7 +47,7 @@ public class ConsultaService {
         }
     }
     
-    public boolean cansultarAgendamentoPaciente(LocalDate data, Long id_paciente) {
+    public boolean cansultarAgendamentoPaciente(Date data, Long id_paciente) {
         Connection connection = ConnectionFactory.getConnection();
         try {
             return consultaRepository.cansultarAgendamentoPaciente(connection, data, id_paciente);
@@ -57,7 +58,7 @@ public class ConsultaService {
         }
     }
     
-    public boolean cansultarAgendamentoMedico(LocalDateTime data, Long id_medico) {
+    public boolean cansultarAgendamentoMedico(Date data, Long id_medico) {
         Connection connection = ConnectionFactory.getConnection();
         try {
             return consultaRepository.cansultarAgendamentoMedico(connection, data, id_medico);
@@ -68,8 +69,19 @@ public class ConsultaService {
         }
     }
     
+    public LocalDateTime cansultarDataConsulta(Long id_consulta) {
+        Connection connection = ConnectionFactory.getConnection();
+        try {
+            return consultaRepository.cansultarDataConsulta(connection, id_consulta);
+        } catch ( SQLException e) {
+            return null;
+        } finally {
+            ConnectionFactory.closeConnection(connection);
+        }
+    }
+    
     public void cancelar(Long id, CancelarConsultaDTO dto) throws BancoDadosException, ValidacaoExcecao {
-        ValidacaoService.validarCancelamentoConsulta(dto);
+        ValidacaoService.validarCancelamentoConsulta(id, dto);
         Consulta consulta = consultaMapper.getEntity(dto);
         Connection connection = ConnectionFactory.getConnection();
         try {

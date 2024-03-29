@@ -1,28 +1,33 @@
 package br.unipar.husistema.dto;
 
+import br.unipar.husistema.jsonadapter.LocalDateTimeAdapter;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
+@XmlRootElement
 public class InserirConsultaDTO implements Serializable {
-    
-    private LocalDateTime dataConsuta;
+
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    private Date dataConsulta;
     private Long medicoId;
     private Long pacienteId;
     
     public InserirConsultaDTO() { }
 
-    public InserirConsultaDTO(LocalDateTime dataConsuta, Long medicoId, Long pacienteId) {
-        this.dataConsuta = dataConsuta;
+    public InserirConsultaDTO(Date dataConsulta, Long medicoId, Long pacienteId) {
+        this.dataConsulta = dataConsulta;
         this.medicoId = medicoId;
         this.pacienteId = pacienteId;
     }
-
-    public LocalDateTime getDataConsuta() {
-        return dataConsuta;
+    
+    public Date dataConsulta() {
+        return dataConsulta;
     }
 
-    public void setDataConsuta(LocalDateTime dataConsuta) {
-        this.dataConsuta = dataConsuta;
+    public void setDataConsulta(Date dataConsulta) {
+        this.dataConsulta = dataConsulta;
     }
 
     public Long getMedicoId() {

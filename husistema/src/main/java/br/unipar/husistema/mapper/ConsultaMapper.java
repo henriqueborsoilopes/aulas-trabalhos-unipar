@@ -1,7 +1,6 @@
 package br.unipar.husistema.mapper;
 
 import br.unipar.husistema.dto.CancelarConsultaDTO;
-import br.unipar.husistema.dto.ConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
 import br.unipar.husistema.entity.Consulta;
 import br.unipar.husistema.entity.Medico;
@@ -13,7 +12,7 @@ public class ConsultaMapper {
         return new Consulta(
                 null, 
                 null, 
-                dto.getDataCancelamento(), 
+                null, 
                 dto.getDescriCancelamento(), 
                 true, 
                 null, 
@@ -27,21 +26,11 @@ public class ConsultaMapper {
         paciente.setId(dto.getPacienteId());
         return new Consulta(
                 null, 
-                dto.getDataConsuta(), 
+                dto.dataConsulta(), 
                 null, 
                 null, 
                 false, 
                 medico, 
                 paciente);
-    }
-    
-    public ConsultaDTO getDTO(Consulta entity) {
-        return new ConsultaDTO(
-                entity.getId(), 
-                entity.getDataConsulta(), 
-                entity.getMedico().getId(), 
-                entity.getMedico().getNome(), 
-                entity.getPaciente().getId(), 
-                entity.getPaciente().getNome());
     }
 }

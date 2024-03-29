@@ -1,9 +1,12 @@
 package br.unipar.husistema.resource.imple;
 
+import br.unipar.husistema.dto.AtualizarPessoaDTO;
 import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
-import br.unipar.husistema.dto.MedicoDTO;
-import br.unipar.husistema.dto.PacienteDTO;
+import br.unipar.husistema.dto.InserirMedicoDTO;
+import br.unipar.husistema.dto.InserirPacienteDTO;
+import br.unipar.husistema.dto.ListMedicoDTO;
+import br.unipar.husistema.dto.ListPacienteDTO;
 import jakarta.jws.WebService;
 import br.unipar.husistema.service.PacienteService;
 import java.util.List;
@@ -30,38 +33,33 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
     
     @Override
+    public void atualizar(Long id, AtualizarPessoaDTO dto) throws BancoDadosException, ValidacaoExcecao {
+        pessoaService.atualizar(id, dto);
+    }
+    
+    @Override
     public void inativar(Long id) throws BancoDadosException {
         pessoaService.inativar(id);
     }
     
     @Override
-    public void inserirMedico(MedicoDTO dto) throws ValidacaoExcecao, BancoDadosException {
+    public void inserirMedico(InserirMedicoDTO dto) throws ValidacaoExcecao, BancoDadosException {
         medicoService.inserir(dto);
     }
 
     @Override
-    public List<MedicoDTO> acharTodosMedicos() throws BancoDadosException {
+    public List<ListMedicoDTO> acharTodosMedicos() throws BancoDadosException {
         return medicoService.acharTodos();
     }
     
     @Override
-    public void atualizarMedico(Long id, MedicoDTO dto) throws BancoDadosException, ValidacaoExcecao {
-        medicoService.atualizar(id, dto);
-    }
-    
-    @Override
-    public void inserirPaciente(PacienteDTO dto) throws ValidacaoExcecao, Exception {
+    public void inserirPaciente(InserirPacienteDTO dto) throws ValidacaoExcecao, Exception {
         pacienteService.inserir(dto);
     }
 
     @Override
-    public List<PacienteDTO> acharTodosPacientes() throws BancoDadosException {
+    public List<ListPacienteDTO> acharTodosPacientes() throws BancoDadosException {
         return pacienteService.acharTodos();
-    }
-    
-    @Override
-    public void atualizarPaciente(Long id, PacienteDTO dto) throws BancoDadosException, ValidacaoExcecao {
-        pacienteService.atualizar(id, dto);
     }
 
     @Override

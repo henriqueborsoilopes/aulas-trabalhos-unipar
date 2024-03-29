@@ -1,6 +1,7 @@
 package br.unipar.husistema.service;
 
-import br.unipar.husistema.dto.MedicoDTO;
+import br.unipar.husistema.dto.InserirMedicoDTO;
+import br.unipar.husistema.dto.ListMedicoDTO;
 import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.entity.Medico;
 import br.unipar.husistema.mapper.MedicoMapper;
@@ -28,8 +29,8 @@ public class MedicoService {
         this.medicoMapper = new MedicoMapper();
     }
     
-    public MedicoDTO inserir(MedicoDTO dto) throws BancoDadosException, ValidacaoExcecao {
-        ValidacaoService.validarMedico(dto);
+    public Medico inserir(InserirMedicoDTO dto) throws BancoDadosException, ValidacaoExcecao {
+        ValidacaoService.validarInsercaoMedico(dto);
         Medico entity = medicoMapper.getEntity(dto);
         Connection connection = ConnectionFactory.getConnection();
         try {
@@ -38,7 +39,7 @@ public class MedicoService {
             entity.setId(pessoaRepository.inserir(connection, entity).getId());
             medicoRepository.inserir(connection, entity);
             connection.commit();
-            return medicoMapper.getDTO(entity);
+            return entity;
         } catch (SQLException e) {
             try {
                 connection.rollback();
@@ -73,34 +74,12 @@ public class MedicoService {
         }
     }
     
-    public List<MedicoDTO> acharTodos() throws BancoDadosException {
+    public List<ListMedicoDTO> acharTodos() throws BancoDadosException {
         Connection connection = ConnectionFactory.getConnection();
         try {
             return medicoMapper.getLitDTO(medicoRepository.acharTodos(connection));
         } catch (SQLException e) {
             throw new BancoDadosException("Falha na conexão");
-        } finally {
-            ConnectionFactory.closeConnection(connection);
-        }
-    }
-    
-    public void atualizar(Long id, MedicoDTO dto) throws BancoDadosException, ValidacaoExcecao {
-        ValidacaoService.validarMedico(dto);
-        Medico entity = medicoMapper.getEntity(dto);
-        Connection connection = ConnectionFactory.getConnection();
-        try {
-            entity.setId(id);
-            connection.setAutoCommit(false);
-            enderecoRepository.atualizar(connection, entity.getEndereco());
-            pessoaRepository.atualizar(connection, entity);
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-                throw new BancoDadosException("Falha na conexão");
-            } catch (SQLException ex) {
-                throw new BancoDadosException("Falha na conexão");
-            }
         } finally {
             ConnectionFactory.closeConnection(connection);
         }

@@ -2,13 +2,15 @@ package br.unipar.husistema.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Consulta implements Serializable {
     
     private Long id;
-    private LocalDateTime dataConsulta;
-    private LocalDateTime dataCancelamento;
+    private Date dataConsulta;
+    private Date dataCancelamento;
     private String descriCancelamento;
     private boolean cancelado;
     
@@ -17,7 +19,7 @@ public class Consulta implements Serializable {
     
     public Consulta() { }
 
-    public Consulta(Long id, LocalDateTime dataConsulta, LocalDateTime dataCancelamento, String descriCancelamento, boolean cancelado, Medico medico, Paciente paciente) {
+    public Consulta(Long id, Date dataConsulta, Date dataCancelamento, String descriCancelamento, boolean cancelado, Medico medico, Paciente paciente) {
         this.id = id;
         this.dataConsulta = dataConsulta;
         this.dataCancelamento = dataCancelamento;
@@ -35,19 +37,19 @@ public class Consulta implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getDataConsulta() {
+    public Date getDataConsulta() {
         return dataConsulta;
     }
 
-    public void setDataConsulta(LocalDateTime dataConsulta) {
+    public void setDataConsulta(Date dataConsulta) {
         this.dataConsulta = dataConsulta;
     }
 
-    public LocalDateTime getDataCancelamento() {
+    public Date getDataCancelamento() {
         return dataCancelamento;
     }
 
-    public void setDataCancelamento(LocalDateTime dataCancelamento) {
+    public void setDataCancelamento(Date dataCancelamento) {
         this.dataCancelamento = dataCancelamento;
     }
 
@@ -83,8 +85,11 @@ public class Consulta implements Serializable {
         this.paciente = paciente;
     }
     
-    public LocalDateTime getTerminoConsulta() {
-        return dataConsulta.plusHours(1);
+    public Date getTerminoConsulta() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dataConsulta);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        return calendar.getTime();
     }
 
     @Override

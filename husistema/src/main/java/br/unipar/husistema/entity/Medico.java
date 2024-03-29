@@ -14,7 +14,7 @@ public class Medico extends Pessoa {
     public Medico(Long id, String nome, String email, String telefone, boolean ativo, Endereco endereco, String crm, EspecialidadeEnum tipoEspecialidade) {
         super(id, nome, email, telefone, ativo, endereco);
         this.crm = crm;
-        this.tipoEspecialidade = tipoEspecialidade.getCodigo();
+        this.tipoEspecialidade = tipoEspecialidade == null ? null : tipoEspecialidade.getCodigo();
     }
 
     public String getCrm() {

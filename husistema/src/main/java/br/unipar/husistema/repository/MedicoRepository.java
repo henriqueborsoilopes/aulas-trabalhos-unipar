@@ -13,16 +13,16 @@ import java.util.List;
 public class MedicoRepository {//, "pessoa", "endereco"
     
     private static final String TABELA = "medico";
+    private static final String[] COLUNAS = {"id_pessoa", "crm", "tipo_especialidade"};
     private static final String TABELA_CONSULTA = "consulta";
-    private static final String TABELA_PESSOA = "pessoa";
-    private static final String TABELA_ENDERECO = "endereco";
-    private static final String[] COLUNAS = {"id", "nome", "email", "telefone", "ativo", "id_endereco", "crm", "tipo_especialidade", "id_pessoa"};
     private static final String[] COLUNAS_CONSULTA = {"id_medico"};
-    private static final String[] COLUNAS_ENDERECO = {"id", "logradouro", "numero", "complemento", "bairro", "cidade", "uf", "cep"};
+    private static final String TABELA_PESSOA = "pessoa";
+    private static final String[] COLUNAS_PESSOA = {"id", "nome", "email", "telefone", "ativo", "id_endereco"};
+    
         
     public void inserir(Connection connection, Medico medico) throws SQLException {
         String query = ""
-            + "INSERT INTO " + TABELA + " (" + COLUNAS[8] + ", " + COLUNAS[1] + ", " + COLUNAS[2] + ") "
+            + "INSERT INTO " + TABELA + " (" + COLUNAS[0] + ", " + COLUNAS[1] + ", " + COLUNAS[2] + ") "
             + "VALUES (?, ?, ?);";
          
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -53,35 +53,24 @@ public class MedicoRepository {//, "pessoa", "endereco"
     public Medico acharPorId(Connection connection, Long id) throws SQLException {
         Medico medico = null;        
         String query = ""
-            + "SELECT p.*, m." + COLUNAS[6] + ", m." + COLUNAS[7] + ", e." + COLUNAS_ENDERECO[1] + ", e." + COLUNAS_ENDERECO[2] + ", e." + COLUNAS_ENDERECO[3] + ", e." + COLUNAS_ENDERECO[4] + ", e." + COLUNAS_ENDERECO[5] + ", e." + COLUNAS_ENDERECO[6] + ", e." + COLUNAS_ENDERECO[7] + " "
+            + "SELECT * "
             + "FROM " + TABELA + " m "
-            + "INNER JOIN " + TABELA_PESSOA + " p ON p." + COLUNAS[0] + " = m." + COLUNAS[0] + " "
-            + "INNER JOIN " + TABELA_ENDERECO + " e ON e." + COLUNAS_ENDERECO[0] + " = p." + COLUNAS[9] + " "
+            + "INNER JOIN " + TABELA_PESSOA + " pe ON pe." + COLUNAS_PESSOA[0] + " = m." + COLUNAS[0] + " "
             + "WHERE m." + COLUNAS[0] + " = ?";
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
-            try (ResultSet rs = ps.getResultSet()) {
-                if (rs.next()) {
-                    Endereco endereco = new Endereco(
-                            rs.getLong(COLUNAS_ENDERECO[0]), 
-                            rs.getString(COLUNAS_ENDERECO[1]), 
-                            rs.getString(COLUNAS_ENDERECO[2]), 
-                            rs.getString(COLUNAS_ENDERECO[3]), 
-                            rs.getString(COLUNAS_ENDERECO[4]), 
-                            rs.getString(COLUNAS_ENDERECO[5]), 
-                            rs.getString(COLUNAS_ENDERECO[6]), 
-                            rs.getString(COLUNAS_ENDERECO[7]));
-                    
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {                    
                     medico = new Medico(
-                            rs.getLong(COLUNAS[0]), 
+                            rs.getLong(COLUNAS_PESSOA[0]), 
+                            rs.getString(COLUNAS_PESSOA[1]), 
+                            rs.getString(COLUNAS_PESSOA[2]), 
+                            rs.getString(COLUNAS_PESSOA[3]), 
+                            rs.getBoolean(COLUNAS_PESSOA[4]), 
+                            null, 
                             rs.getString(COLUNAS[1]), 
-                            rs.getString(COLUNAS[2]), 
-                            rs.getString(COLUNAS[3]), 
-                            rs.getBoolean(COLUNAS[4]), 
-                            endereco, 
-                            rs.getString(COLUNAS[6]), 
-                            EspecialidadeEnum.paraEnum(rs.getInt(COLUNAS[7])));
+                            EspecialidadeEnum.paraEnum(rs.getInt(COLUNAS[2])));
                     
                 }
                 return medico;
@@ -93,33 +82,23 @@ public class MedicoRepository {//, "pessoa", "endereco"
         List<Medico> medicos = new ArrayList<>();
         
         String query = ""
-            + "SELECT p.*, m." + COLUNAS[6] + ", m." + COLUNAS[7] + ", e." + COLUNAS_ENDERECO[1] + ", e." + COLUNAS_ENDERECO[2] + ", e." + COLUNAS_ENDERECO[3] + ", e." + COLUNAS_ENDERECO[4] + ", e." + COLUNAS_ENDERECO[5] + ", e." + COLUNAS_ENDERECO[6] + ", e." + COLUNAS_ENDERECO[7] + " "
+            + "SELECT * "
             + "FROM " + TABELA + " m "
-            + "INNER JOIN " + TABELA_PESSOA + " p ON p." + COLUNAS[0] + " = m." + COLUNAS[0] + " "
-            + "INNER JOIN " + TABELA_ENDERECO + " e ON e." + COLUNAS_ENDERECO[0] + " = p." + COLUNAS[9] + " ";
+            + "INNER JOIN " + TABELA_PESSOA + " pe ON pe." + COLUNAS_PESSOA[0] + " = m." + COLUNAS[0] + " "
+            + "ORDER BY pe." + COLUNAS_PESSOA[1] + " ASC;";
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    Endereco endereco = new Endereco(
-                            rs.getLong(COLUNAS_ENDERECO[0]), 
-                            rs.getString(COLUNAS_ENDERECO[1]), 
-                            rs.getString(COLUNAS_ENDERECO[2]), 
-                            rs.getString(COLUNAS_ENDERECO[3]), 
-                            rs.getString(COLUNAS_ENDERECO[4]), 
-                            rs.getString(COLUNAS_ENDERECO[5]), 
-                            rs.getString(COLUNAS_ENDERECO[6]), 
-                            rs.getString(COLUNAS_ENDERECO[7]));
-                    
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {                    
                     Medico medico = new Medico(
-                            rs.getLong(COLUNAS[0]), 
+                            rs.getLong(COLUNAS_PESSOA[0]), 
+                            rs.getString(COLUNAS_PESSOA[1]), 
+                            rs.getString(COLUNAS_PESSOA[2]), 
+                            rs.getString(COLUNAS_PESSOA[3]), 
+                            rs.getBoolean(COLUNAS_PESSOA[4]), 
+                            null, 
                             rs.getString(COLUNAS[1]), 
-                            rs.getString(COLUNAS[2]), 
-                            rs.getString(COLUNAS[3]), 
-                            rs.getBoolean(COLUNAS[4]), 
-                            endereco, 
-                            rs.getString(COLUNAS[5]), 
-                            EspecialidadeEnum.paraEnum(rs.getInt(COLUNAS[6])));
+                            EspecialidadeEnum.paraEnum(rs.getInt(COLUNAS[2])));
                     
                     medicos.add(medico);
                 }

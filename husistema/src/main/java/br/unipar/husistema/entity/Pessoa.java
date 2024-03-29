@@ -3,7 +3,7 @@ package br.unipar.husistema.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Pessoa implements Serializable {
+public class Pessoa implements Serializable {
     
     private Long id;
     private String nome;

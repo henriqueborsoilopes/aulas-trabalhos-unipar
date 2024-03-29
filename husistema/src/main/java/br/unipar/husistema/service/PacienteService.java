@@ -1,6 +1,7 @@
 package br.unipar.husistema.service;
 
-import br.unipar.husistema.dto.PacienteDTO;
+import br.unipar.husistema.dto.InserirPacienteDTO;
+import br.unipar.husistema.dto.ListPacienteDTO;
 import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.entity.Paciente;
 import br.unipar.husistema.mapper.PacienteMapper;
@@ -28,8 +29,8 @@ public class PacienteService {
         this.pacienteMapper = new PacienteMapper();
     }
     
-    public PacienteDTO inserir(PacienteDTO dto) throws BancoDadosException, ValidacaoExcecao {
-        ValidacaoService.validarPaciente(dto);
+    public Paciente inserir(InserirPacienteDTO dto) throws BancoDadosException, ValidacaoExcecao {
+        ValidacaoService.validarInsercaoPaciente(dto);
         Paciente paciente = pacienteMapper.getEntity(dto);
         Connection connection = ConnectionFactory.getConnection();
         try {
@@ -38,7 +39,7 @@ public class PacienteService {
             paciente.setId(pessoaRepository.inserir(connection, paciente).getId());
             pacienteRepository.inserir(connection, paciente);
             connection.commit();
-            return pacienteMapper.getDTO(paciente);
+            return paciente;
         } catch (SQLException e) {
             try {
                 connection.rollback();
@@ -51,10 +52,10 @@ public class PacienteService {
         }
     }
     
-    public PacienteDTO acharPorId(Long id) throws BancoDadosException {
+    public Paciente acharPorId(Long id) throws BancoDadosException {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            return pacienteMapper.getDTO(pacienteRepository.acharPorId(connection, id));
+            return pacienteRepository.acharPorId(connection, id);
         } catch (SQLException e) {
             throw new BancoDadosException("Falha na conexão");
         } finally {
@@ -62,34 +63,12 @@ public class PacienteService {
         }
     }
     
-    public List<PacienteDTO> acharTodos() throws BancoDadosException {
+    public List<ListPacienteDTO> acharTodos() throws BancoDadosException {
         Connection connection = ConnectionFactory.getConnection();
         try {
             return pacienteMapper.getLitDTO(pacienteRepository.acharTodos(connection));
         } catch (SQLException e) {
             throw new BancoDadosException("Falha na conexão");
-        } finally {
-            ConnectionFactory.closeConnection(connection);
-        }
-    }
-    
-    public void atualizar(Long id, PacienteDTO dto) throws BancoDadosException, ValidacaoExcecao {
-        ValidacaoService.validarPaciente(dto);
-        Paciente paciente = pacienteMapper.getEntity(dto);
-        Connection connection = ConnectionFactory.getConnection();
-        try {
-            paciente.setId(id);
-            connection.setAutoCommit(false);
-            enderecoRepository.atualizar(connection, paciente.getEndereco());
-            pessoaRepository.atualizar(connection, paciente);
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-                throw new BancoDadosException("Falha na conexão");
-            } catch (SQLException ex) {
-                throw new BancoDadosException("Falha na conexão");
-            }
         } finally {
             ConnectionFactory.closeConnection(connection);
         }

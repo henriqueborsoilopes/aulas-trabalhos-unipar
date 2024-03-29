@@ -1,9 +1,12 @@
 package br.unipar.husistema.resource;
 
+import br.unipar.husistema.dto.AtualizarPessoaDTO;
 import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
-import br.unipar.husistema.dto.MedicoDTO;
-import br.unipar.husistema.dto.PacienteDTO;
+import br.unipar.husistema.dto.InserirMedicoDTO;
+import br.unipar.husistema.dto.InserirPacienteDTO;
+import br.unipar.husistema.dto.ListMedicoDTO;
+import br.unipar.husistema.dto.ListPacienteDTO;
 import br.unipar.husistema.service.exception.BancoDadosException;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import jakarta.jws.WebMethod;
@@ -12,28 +15,25 @@ import java.util.List;
 
 @WebService
 public interface IHUSistemaResource {
-    
+       
+    @WebMethod
+    public void atualizar(Long id, AtualizarPessoaDTO dto) throws BancoDadosException, ValidacaoExcecao ;
+      
     @WebMethod
     public void inativar(Long id) throws BancoDadosException;
     
     @WebMethod
-    public void inserirMedico(MedicoDTO dto) throws ValidacaoExcecao, Exception;
+    public void inserirMedico(InserirMedicoDTO dto) throws ValidacaoExcecao, Exception;
     
     @WebMethod
-    public List<MedicoDTO> acharTodosMedicos() throws BancoDadosException;
+    public List<ListMedicoDTO> acharTodosMedicos() throws BancoDadosException;
+ 
+    @WebMethod
+    public void inserirPaciente(InserirPacienteDTO dto) throws ValidacaoExcecao, Exception;
     
     @WebMethod
-    public void atualizarMedico(Long id, MedicoDTO dto) throws BancoDadosException, ValidacaoExcecao;
-    
-    @WebMethod
-    public void inserirPaciente(PacienteDTO dto) throws ValidacaoExcecao, Exception;
-    
-    @WebMethod
-    public List<PacienteDTO> acharTodosPacientes() throws BancoDadosException;
-    
-    @WebMethod
-    public void atualizarPaciente(Long id, PacienteDTO dto) throws BancoDadosException, ValidacaoExcecao ;
-        
+    public List<ListPacienteDTO> acharTodosPacientes() throws BancoDadosException;
+  
     @WebMethod
     public void inserirConsulta(InserirConsultaDTO dto) throws BancoDadosException, ValidacaoExcecao ;
         

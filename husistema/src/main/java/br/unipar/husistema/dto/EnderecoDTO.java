@@ -1,8 +1,6 @@
 package br.unipar.husistema.dto;
 
-import java.io.Serializable;
-
-public class EnderecoDTO implements Serializable {
+public class EnderecoDTO {
     
     private Long id;
     private String logradouro;
