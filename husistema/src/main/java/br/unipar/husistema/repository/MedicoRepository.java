@@ -1,6 +1,5 @@
 package br.unipar.husistema.repository;
 
-import br.unipar.husistema.entity.Endereco;
 import br.unipar.husistema.entity.Medico;
 import br.unipar.husistema.entity.enums.EspecialidadeEnum;
 import java.sql.Connection;

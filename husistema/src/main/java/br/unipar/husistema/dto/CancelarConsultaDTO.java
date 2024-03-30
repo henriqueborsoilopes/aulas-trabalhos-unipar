@@ -1,7 +1,6 @@
 package br.unipar.husistema.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class CancelarConsultaDTO implements Serializable {
 

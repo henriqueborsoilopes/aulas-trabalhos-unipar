@@ -2,8 +2,8 @@ package br.unipar.husistema.service;
 
 import br.unipar.husistema.dto.InserirMedicoDTO;
 import br.unipar.husistema.dto.ListMedicoDTO;
-import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.entity.Medico;
+import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.mapper.MedicoMapper;
 import br.unipar.husistema.repository.EnderecoRepository;
 import br.unipar.husistema.repository.MedicoRepository;

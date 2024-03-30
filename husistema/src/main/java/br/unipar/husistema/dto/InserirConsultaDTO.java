@@ -1,33 +1,41 @@
 package br.unipar.husistema.dto;
 
-import br.unipar.husistema.dto.jsonadapter.LocalDateTimeAdapter;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-@XmlRootElement
 public class InserirConsultaDTO implements Serializable {
 
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    private Date dataConsulta;
+    private String data;
+    private String hora;
     private Long medicoId;
     private Long pacienteId;
     
     public InserirConsultaDTO() { }
 
-    public InserirConsultaDTO(Date dataConsulta, Long medicoId, Long pacienteId) {
-        this.dataConsulta = dataConsulta;
+    public InserirConsultaDTO(String data, String hora, Long medicoId, Long pacienteId) {
+        this.data = data;
+        this.hora = hora;
         this.medicoId = medicoId;
         this.pacienteId = pacienteId;
     }
-    
-    public Date dataConsulta() {
-        return dataConsulta;
+
+    public String getData() {
+        return data;
     }
 
-    public void setDataConsulta(Date dataConsulta) {
-        this.dataConsulta = dataConsulta;
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     public Long getMedicoId() {
@@ -45,4 +53,12 @@ public class InserirConsultaDTO implements Serializable {
     public void setPacienteId(Long pacienteId) {
         this.pacienteId = pacienteId;
     }
+    
+    public LocalDateTime getDataHorario() {
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatterHorario = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime dataHora = LocalDateTime.of(LocalDate.parse(data, formatterData), LocalTime.parse(hora, formatterHorario));
+        return dataHora;
+    }
+        
 }

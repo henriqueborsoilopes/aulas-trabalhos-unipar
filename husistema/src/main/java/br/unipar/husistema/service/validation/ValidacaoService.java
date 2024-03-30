@@ -14,10 +14,9 @@ import br.unipar.husistema.service.PacienteService;
 import br.unipar.husistema.service.exception.BancoDadosException;
 import br.unipar.husistema.service.exception.Campo;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
-import br.unipar.husistema.util.Util;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class ValidacaoService {
@@ -111,22 +110,19 @@ public class ValidacaoService {
         medicoService = new MedicoService();
         pacienteService = new PacienteService();
         campos = new ArrayList<>();
-        
-        Calendar dataAgora = Calendar.getInstance();
-        dataAgora.setTime(new Date());
-        dataAgora.add(Calendar.MINUTE, 30);
-        
+                
         //Verificar se a data é do passado
-        if (dto.dataConsulta().compareTo(new Date()) < 0) {
+        if (dto.getDataHorario().isBefore(LocalDateTime.now())) {
             campos.add(new Campo("Data da Consulta", "Data inválida!"));
         //Verificar se o dia é domingo
-        } else if (dto.dataConsulta().getDay() == 0) {
-            campos.add(new Campo("Data da Consulta", "Data inválida!"));
+        } else if (dto.getDataHorario().getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            campos.add(new Campo("Data da Consulta", "Data inválida, não trabalhemos no domigo!"));
         //Verificar se a data da consulta foi marcada com antecedência
-        } else if (dto.dataConsulta().compareTo(dataAgora.getTime()) < 0) {
+        } else if (dto.getDataHorario().isAfter(LocalDateTime.now())
+                && dto.getDataHorario().isBefore(LocalDateTime.now().plusMinutes(30))) {
             campos.add(new Campo("Horário da Consulta", "O agendamento deve ser feito 30 minutos de antecedência!"));
         //Verificar se o horário está entre 7 e 18 horas
-        } else if (dto.dataConsulta().getHours() < 7 || (dto.dataConsulta().getHours() == 17 && dto.dataConsulta().getMinutes() > 0)) {
+        } else if (dto.getDataHorario().getHour() < 7 || (dto.getDataHorario().getHour() == 17 && dto.getDataHorario().getMinute() > 0)) {
             campos.add(new Campo("Horário da Consulta", "O horário deve ser estar entre às 7 e 17 horas!"));
         }
         
@@ -138,7 +134,7 @@ public class ValidacaoService {
                 campos.add(new Campo("Paciente", "Paciente inativo!"));
             } 
             
-            if (consultaService.cansultarAgendamentoPaciente(dto.getPacienteId(), dto.dataConsulta())) {
+            if (consultaService.cansultarAgendamentoPaciente(dto.getPacienteId(), dto.getDataHorario())) {
                 campos.add(new Campo("Paciente", "Paciente já possuí agendamento na data informada!"));
             }
             
@@ -150,7 +146,7 @@ public class ValidacaoService {
                     campos.add(new Campo("Médico", "Médico inativo!"));
                 }
                 
-                if (consultaService.cansultarAgendamentoMedico(dto.dataConsulta(), dto.getMedicoId())) {
+                if (consultaService.cansultarAgendamentoMedico(dto.getDataHorario(), dto.getMedicoId())) {
                     campos.add(new Campo("Médico", "Médico já possuí agendamento na data informada!"));
                 }
             } else {
@@ -171,6 +167,7 @@ public class ValidacaoService {
     }
     
     public static void validarCancelamentoConsulta(Long id_consulta, CancelarConsultaDTO dto) throws ValidacaoExcecao {
+        consultaService = new ConsultaService();
         campos = new ArrayList<>();
         
         if (dto == null) {
@@ -178,7 +175,7 @@ public class ValidacaoService {
             throw new ValidacaoExcecao(campos);
         }
         
-        if (consultaService.cansultarDataConsulta(id_consulta).compareTo(new Date()) < 0) {
+        if (LocalDateTime.now().plusDays(1).isAfter(consultaService.cansultarDataConsulta(id_consulta))) {
             campos.add(new Campo("Data Cancelamento", "O cancelamento deve ocorrer com antecedência mínima de 24 horas!"));
         }
         

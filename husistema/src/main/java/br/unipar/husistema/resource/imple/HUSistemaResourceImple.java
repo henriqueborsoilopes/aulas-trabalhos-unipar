@@ -7,15 +7,15 @@ import br.unipar.husistema.dto.InserirMedicoDTO;
 import br.unipar.husistema.dto.InserirPacienteDTO;
 import br.unipar.husistema.dto.ListMedicoDTO;
 import br.unipar.husistema.dto.ListPacienteDTO;
-import jakarta.jws.WebService;
-import br.unipar.husistema.service.PacienteService;
-import java.util.List;
 import br.unipar.husistema.resource.IHUSistemaResource;
 import br.unipar.husistema.service.ConsultaService;
 import br.unipar.husistema.service.MedicoService;
+import br.unipar.husistema.service.PacienteService;
 import br.unipar.husistema.service.PessoaService;
 import br.unipar.husistema.service.exception.BancoDadosException;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
+import jakarta.jws.WebService;
+import java.util.List;
 
 @WebService(serviceName = "HUSistemaResourceImple")
 public class HUSistemaResourceImple implements IHUSistemaResource {

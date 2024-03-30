@@ -2,7 +2,6 @@ package br.unipar.husistema.dto;
 
 public class EnderecoDTO {
     
-    private Long id;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -13,8 +12,7 @@ public class EnderecoDTO {
     
     public EnderecoDTO() { }
 
-    public EnderecoDTO(Long id, String logradouro, String numero, String complemento, String bairro, String cidade, String uf, String cep) {
-        this.id = id;
+    public EnderecoDTO(String logradouro, String numero, String complemento, String bairro, String cidade, String uf, String cep) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -22,14 +20,6 @@ public class EnderecoDTO {
         this.cidade = cidade;
         this.uf = uf;
         this.cep = cep;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getLogradouro() {

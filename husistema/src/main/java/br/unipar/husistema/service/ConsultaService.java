@@ -2,8 +2,8 @@ package br.unipar.husistema.service;
 
 import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
-import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.entity.Consulta;
+import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.mapper.ConsultaMapper;
 import br.unipar.husistema.repository.ConsultaRepository;
 import br.unipar.husistema.service.exception.BancoDadosException;
@@ -11,7 +11,7 @@ import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import br.unipar.husistema.service.validation.ValidacaoService;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class ConsultaService {
     
@@ -45,7 +45,7 @@ public class ConsultaService {
         }
     }
     
-    public boolean cansultarAgendamentoPaciente(Long id_paciente, Date data) {
+    public boolean cansultarAgendamentoPaciente(Long id_paciente, LocalDateTime data) {
         Connection connection = ConnectionFactory.getConnection();
         try {
             return consultaRepository.cansultarAgendamentoPaciente(connection, id_paciente, data);
@@ -56,7 +56,7 @@ public class ConsultaService {
         }
     }
     
-    public boolean cansultarAgendamentoMedico(Date data, Long id_medico) {
+    public boolean cansultarAgendamentoMedico(LocalDateTime data, Long id_medico) {
         Connection connection = ConnectionFactory.getConnection();
         try {
             return consultaRepository.cansultarAgendamentoMedico(connection, data, id_medico);
@@ -67,7 +67,7 @@ public class ConsultaService {
         }
     }
     
-    public Date cansultarDataConsulta(Long id_consulta) {
+    public LocalDateTime cansultarDataConsulta(Long id_consulta) {
         Connection connection = ConnectionFactory.getConnection();
         try {
             return consultaRepository.cansultarDataConsulta(connection, id_consulta);

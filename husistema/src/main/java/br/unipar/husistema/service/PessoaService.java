@@ -1,7 +1,6 @@
 package br.unipar.husistema.service;
 
 import br.unipar.husistema.dto.AtualizarPessoaDTO;
-import br.unipar.husistema.entity.Paciente;
 import br.unipar.husistema.entity.Pessoa;
 import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.mapper.PessoaMapper;

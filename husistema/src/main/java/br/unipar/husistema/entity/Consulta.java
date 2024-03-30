@@ -1,15 +1,14 @@
 package br.unipar.husistema.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Consulta implements Serializable {
     
     private Long id;
-    private Date dataConsulta;
-    private Date dataCancelamento;
+    private LocalDateTime dataConsulta;
+    private LocalDateTime dataCancelamento;
     private String descriCancelamento;
     private boolean cancelado;
     
@@ -18,7 +17,7 @@ public class Consulta implements Serializable {
     
     public Consulta() { }
 
-    public Consulta(Long id, Date dataConsulta, Date dataCancelamento, String descriCancelamento, boolean cancelado, Medico medico, Paciente paciente) {
+    public Consulta(Long id, LocalDateTime dataConsulta, LocalDateTime dataCancelamento, String descriCancelamento, boolean cancelado, Medico medico, Paciente paciente) {
         this.id = id;
         this.dataConsulta = dataConsulta;
         this.dataCancelamento = dataCancelamento;
@@ -36,19 +35,19 @@ public class Consulta implements Serializable {
         this.id = id;
     }
 
-    public Date getDataConsulta() {
+    public LocalDateTime getDataConsulta() {
         return dataConsulta;
     }
 
-    public void setDataConsulta(Date dataConsulta) {
+    public void setDataConsulta(LocalDateTime dataConsulta) {
         this.dataConsulta = dataConsulta;
     }
 
-    public Date getDataCancelamento() {
+    public LocalDateTime getDataCancelamento() {
         return dataCancelamento;
     }
 
-    public void setDataCancelamento(Date dataCancelamento) {
+    public void setDataCancelamento(LocalDateTime dataCancelamento) {
         this.dataCancelamento = dataCancelamento;
     }
 

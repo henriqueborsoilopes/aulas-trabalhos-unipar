@@ -7,7 +7,7 @@ public class EnderecoMapper {
     
     public static Endereco getEntity(EnderecoDTO dto) {
         return new Endereco(
-                dto.getId(), 
+                null, 
                 dto.getLogradouro(), 
                 dto.getNumero(), 
                 dto.getComplemento(), 
@@ -18,8 +18,7 @@ public class EnderecoMapper {
     }
     
     public static EnderecoDTO getDTO(Endereco entity) {
-        return new EnderecoDTO(
-                entity.getId(), 
+        return new EnderecoDTO( 
                 entity.getLogradouro(), 
                 entity.getNumero(), 
                 entity.getComplemento(), 

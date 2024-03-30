@@ -2,8 +2,8 @@ package br.unipar.husistema.service;
 
 import br.unipar.husistema.dto.InserirPacienteDTO;
 import br.unipar.husistema.dto.ListPacienteDTO;
-import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.entity.Paciente;
+import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.mapper.PacienteMapper;
 import br.unipar.husistema.repository.EnderecoRepository;
 import br.unipar.husistema.repository.PacienteRepository;

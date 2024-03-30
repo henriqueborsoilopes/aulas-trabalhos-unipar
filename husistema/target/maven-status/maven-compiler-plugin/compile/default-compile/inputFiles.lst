@@ -4,7 +4,6 @@ C:\Projetos\trabalhos-unipar\husistema\src\main\java\br\unipar\husistema\mapper\
 C:\Projetos\trabalhos-unipar\husistema\src\main\java\br\unipar\husistema\service\exception\Campo.java
 C:\Projetos\trabalhos-unipar\husistema\src\main\java\br\unipar\husistema\factory\ConnectionFactory.java
 C:\Projetos\trabalhos-unipar\husistema\src\main\java\br\unipar\husistema\repository\MedicoRepository.java
-C:\Projetos\trabalhos-unipar\husistema\src\main\java\br\unipar\husistema\dto\jsonadapter\LocalDateTimeAdapter.java
 C:\Projetos\trabalhos-unipar\husistema\src\main\java\br\unipar\husistema\service\PacienteService.java
 C:\Projetos\trabalhos-unipar\husistema\src\main\java\br\unipar\husistema\entity\Consulta.java
 C:\Projetos\trabalhos-unipar\husistema\src\main\java\br\unipar\husistema\service\validation\ValidacaoService.java

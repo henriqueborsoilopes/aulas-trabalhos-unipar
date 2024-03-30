@@ -26,7 +26,7 @@ public class ConsultaMapper {
         paciente.setId(dto.getPacienteId());
         return new Consulta(
                 null, 
-                dto.dataConsulta(), 
+                dto.getDataHorario(), 
                 null, 
                 null, 
                 false, 
