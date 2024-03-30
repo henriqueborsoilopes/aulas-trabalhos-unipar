@@ -1,4 +1,4 @@
-package br.unipar.husistema.jsonadapter;
+package br.unipar.husistema.dto.jsonadapter;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.DateFormat;

@@ -4,6 +4,16 @@ INNER JOIN pessoa m ON c.id_medico = m.id
 INNER JOIN pessoa p ON c.id_paciente = p.id
 WHERE c.id = 1;
 
+SELECT * 
+FROM consulta
+WHERE id_medico = 6
+AND DATE(data_consulta) = DATE('2024-03-30 17:31:10')
+    AND (
+        '2024-03-30 16:30:10' BETWEEN data_consulta AND data_consulta + INTERVAL '1 hour'
+        OR '2024-03-30 17:31:10' BETWEEN data_consulta AND data_consulta + INTERVAL '1 hour'
+    )
+AND cancelado = false;
+
 SELECT *
 FROM consulta
 WHERE Date(data_consuta) = '2024-03-30' AND id_paciente = 3 AND cancelado = false;
@@ -64,10 +74,10 @@ create table endereco (
 
 create table pessoa (
 	id serial not null primary key,
-    nome varchar(255),
-    email varchar(255),
-    telefone varchar(255),
-    ativo boolean,
+    	nome varchar(255),
+    	email varchar(255),
+    	telefone varchar(255),
+    	ativo boolean,
 	id_endereco bigint,
 	constraint fk_id_endereco foreign key (id_endereco) references endereco(id)
 );
@@ -75,7 +85,7 @@ create table pessoa (
 create table medico (
 	id_pessoa bigint,
 	crm varchar(255),
-    tipo_especialidade varchar(255)
+    	tipo_especialidade int
 );
 
 create table paciente (

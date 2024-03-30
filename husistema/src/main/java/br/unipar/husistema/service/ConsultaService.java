@@ -11,9 +11,6 @@ import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import br.unipar.husistema.service.validation.ValidacaoService;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ConsultaService {
@@ -36,6 +33,7 @@ public class ConsultaService {
             connection.commit();
             return consulta;
         } catch (SQLException e) {
+            e.printStackTrace();
             try {
                 connection.rollback();
                 throw new BancoDadosException("Falha na conexão");
@@ -47,10 +45,10 @@ public class ConsultaService {
         }
     }
     
-    public boolean cansultarAgendamentoPaciente(Date data, Long id_paciente) {
+    public boolean cansultarAgendamentoPaciente(Long id_paciente, Date data) {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            return consultaRepository.cansultarAgendamentoPaciente(connection, data, id_paciente);
+            return consultaRepository.cansultarAgendamentoPaciente(connection, id_paciente, data);
         } catch (SQLException e) {
             return false;
         } finally {
@@ -69,7 +67,7 @@ public class ConsultaService {
         }
     }
     
-    public LocalDateTime cansultarDataConsulta(Long id_consulta) {
+    public Date cansultarDataConsulta(Long id_consulta) {
         Connection connection = ConnectionFactory.getConnection();
         try {
             return consultaRepository.cansultarDataConsulta(connection, id_consulta);
@@ -86,7 +84,7 @@ public class ConsultaService {
         Connection connection = ConnectionFactory.getConnection();
         try {
             connection.setAutoCommit(false);
-            consultaRepository.cancelar(connection, consulta);
+            consultaRepository.cancelar(connection, id, consulta);
             connection.commit();
         } catch (SQLException e) {
             try {

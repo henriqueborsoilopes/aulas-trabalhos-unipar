@@ -32,7 +32,7 @@ public class PessoaService {
         try {
             pessoa.setId(id);
             connection.setAutoCommit(false);
-            enderecoRepository.atualizar(connection, pessoa.getEndereco());
+            enderecoRepository.atualizar(connection, id, pessoa.getEndereco());
             pessoaRepository.atualizar(connection, pessoa);
             connection.commit();
         } catch (SQLException e) {

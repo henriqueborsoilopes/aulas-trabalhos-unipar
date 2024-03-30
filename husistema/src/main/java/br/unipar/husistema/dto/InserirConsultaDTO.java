@@ -1,6 +1,6 @@
 package br.unipar.husistema.dto;
 
-import br.unipar.husistema.jsonadapter.LocalDateTimeAdapter;
+import br.unipar.husistema.dto.jsonadapter.LocalDateTimeAdapter;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;

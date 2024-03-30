@@ -1,21 +1,19 @@
 package br.unipar.husistema.repository;
 
 import br.unipar.husistema.entity.Consulta;
-import br.unipar.husistema.entity.Medico;
-import br.unipar.husistema.entity.Paciente;
+import br.unipar.husistema.util.Util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ConsultaRepository {
     
     private static final String TABELA = "consulta";
-    private static final String[] TABELAS_EXTERNA = {"pessoa"};
-    private static final String[] COLUNAS_EXTERNA = {"nome"};
     private static final String[] COLUNAS = {"id", "data_consulta", "data_cancelamento", 
         "descri_cancelamento", "cancelado", "id_medico", "id_paciente"};
     
@@ -25,89 +23,64 @@ public class ConsultaRepository {
             + "VALUES (?, ?, ?, ?);";
         
         try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setDate(1, new java.sql.Date(consulta.getDataConsulta().getTime()));
-            ps.setBoolean(2, consulta.isCancelado());
+            ps.setTimestamp(1, Timestamp.valueOf(Util.getAnoMesDiaHora(consulta.getDataConsulta())));
+            ps.setBoolean(2, false);
             ps.setLong(3, consulta.getMedico().getId());
             ps.setLong(4, consulta.getPaciente().getId());
             ps.execute();        
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
-                    consulta = acharPorId(connection, rs.getLong(COLUNAS[0]));
+                    consulta.setId(rs.getLong(COLUNAS[0]));
                 }
                 return consulta;
             }
         }
     }
     
-    public Consulta acharPorId(Connection connection, Long id) throws SQLException {
+    public boolean cansultarAgendamentoPaciente(Connection connection, Long id_paciente, Date date) throws SQLException {
         String query = ""
-            + "SELECT c.*, m." + COLUNAS_EXTERNA[0] + " as nome_medico, p." + COLUNAS_EXTERNA[0] + " as nome_paciente "
+            + "SELECT c." + COLUNAS[1] + " "
             + "FROM " + TABELA + " c "
-            + "INNER JOIN " + TABELAS_EXTERNA[0] + " m ON c." + COLUNAS[5] + " = m.id "
-            + "INNER JOIN " + TABELAS_EXTERNA[0] + " p ON c." + COLUNAS[6] + " = p.id "
-            + "WHERE c." + COLUNAS[0] + " = ?;";
+            + "WHERE c." + COLUNAS[6] + " = ? "
+            + "AND DATE(c." + COLUNAS[1] + ") = DATE(?) "
+            + "AND c." + COLUNAS[4] + " = false;";
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setLong(1, id);
-            ps.execute();
-        
-            try (ResultSet rs = ps.getResultSet()) {
-                if (rs.next()) {
-                    Medico medico = new Medico();
-                    medico.setId(rs.getLong(COLUNAS[4]));
-                    medico.setNome(rs.getString("nome_medico"));
-                    Paciente paciente = new Paciente();
-                    paciente.setId(rs.getLong(COLUNAS[5]));
-                    paciente.setNome(rs.getString("nome_paciente"));
-                    return new Consulta(
-                            rs.getLong(COLUNAS[0]), 
-                            new Date(rs.getDate(COLUNAS[1]).getTime()),
-                            new Date(rs.getDate(COLUNAS[6]).getTime()),
-                            rs.getString(COLUNAS[2]), 
-                            rs.getBoolean(COLUNAS[3]), 
-                            medico, 
-                            paciente);
-                }
-                return null;
-            } 
-        }
-    }
-    
-    public boolean cansultarAgendamentoPaciente(Connection connection, Date data, Long id_paciente) throws SQLException {
-        String query = ""
-            + "SELECT * "
-            + "FROM " + TABELA + " "
-            + "WHERE DATE(" + COLUNAS[1] + ") = ? AND " + COLUNAS[5] + " = ? AND " + COLUNAS[4] + " = false;";
-        
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setDate(1, new java.sql.Date(data.getTime()));
-            ps.setLong(2, id_paciente);
+            ps.setLong(1, id_paciente);
+            ps.setTimestamp(2, Timestamp.valueOf(Util.getAnoMesDiaHora(date)));
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
         }
     }
-    
+        
     public boolean cansultarAgendamentoMedico(Connection connection, Date data, Long id_medico) throws SQLException {
+        Calendar dataMais1H = Calendar.getInstance();
+        dataMais1H.setTime(data);
+        dataMais1H.add(Calendar.HOUR_OF_DAY, 1);
+                
         String query = ""
             + "SELECT * "
             + "FROM " + TABELA + " "
-            + "WHERE " + COLUNAS[1] + " < ? OR ("
-            + COLUNAS[1] + " + INTERVAL '1 hour' > ? AND "
-            + COLUNAS[1] + " + INTERVAL '1 hour' > ? + INTERVAL '1 hour') AND "
-            + COLUNAS[4] + " = false;";
+            + "WHERE " + COLUNAS[5] + " = ? "
+            + "AND DATE(" + COLUNAS[1] + ") = DATE(?) "
+            + "AND ? BETWEEN " + COLUNAS[1] + " AND " + COLUNAS[1] + " + INTERVAL '1 hour' "
+            + "OR ? BETWEEN " + COLUNAS[1] + " AND " + COLUNAS[1] + " + INTERVAL '1 hour' "
+            + "AND " + COLUNAS[4] + " = false;";
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setDate(1, new java.sql.Date(data.getTime()));
-            ps.setLong(2, id_medico);
+            ps.setLong(1, id_medico);
+            ps.setTimestamp(2, Timestamp.valueOf(Util.getAnoMesDiaHora(data)));
+            ps.setTimestamp(3, Timestamp.valueOf(Util.getAnoMesDiaHora(data)));
+            ps.setTimestamp(4, Timestamp.valueOf(Util.getAnoMesDiaHora(dataMais1H.getTime())));
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
         }
     }
     
-    public LocalDateTime cansultarDataConsulta(Connection connection, Long id_consulta) throws SQLException {
-        LocalDateTime data = null;
+    public Date cansultarDataConsulta(Connection connection, Long id_consulta) throws SQLException {
+        Date data = null;
         String query = ""
             + "SELECT c." + COLUNAS[1] + " "
             + "FROM " + TABELA + " c "
@@ -117,24 +90,23 @@ public class ConsultaRepository {
             ps.setLong(1, id_consulta);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    data = new java.sql.Timestamp(rs.getDate(COLUNAS[1]).getTime()).toLocalDateTime();
+                    data = new Date(Util.getAnoMesDiaHora(rs.getDate(COLUNAS[1])));
                 }
                 return data;
             }
         }
     }
     
-    public void cancelar(Connection connection, Consulta consulta) throws SQLException {
+    public void cancelar(Connection connection, Long id, Consulta consulta) throws SQLException {
         String query = ""
             + "UPDATE " + TABELA + " "
-            + "SET " + COLUNAS[2] + " = ?, " + COLUNAS[2] + " = ?, " + COLUNAS[4] + " "
-            + "WHERE id = ?;";
+            + "SET " + COLUNAS[2] + " = CURRENT_TIMESTAMP, " + COLUNAS[3] + " = ?, " + COLUNAS[4] + " = ? "
+            + "WHERE " + COLUNAS[0] + " = ?;";
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, consulta.getDescriCancelamento());
-            ps.setDate(2, new java.sql.Date(consulta.getDataConsulta().getTime()));
-            ps.setBoolean(3, true);            
-            ps.setLong(4, consulta.getPaciente().getId());
+            ps.setBoolean(2, true);            
+            ps.setLong(3, id);
             ps.execute();
         }
     }

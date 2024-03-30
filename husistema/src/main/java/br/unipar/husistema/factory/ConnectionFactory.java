@@ -1,6 +1,5 @@
 package br.unipar.husistema.factory;
 
-import br.unipar.husistema.service.exception.BancoDadosException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.naming.Context;

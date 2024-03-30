@@ -33,12 +33,12 @@ public class HUSistemaResourceImple implements IHUSistemaResource {
     }
     
     @Override
-    public void atualizar(Long id, AtualizarPessoaDTO dto) throws BancoDadosException, ValidacaoExcecao {
+    public void atualizarUsuario(Long id, AtualizarPessoaDTO dto) throws BancoDadosException, ValidacaoExcecao {
         pessoaService.atualizar(id, dto);
     }
     
     @Override
-    public void inativar(Long id) throws BancoDadosException {
+    public void inativarUsuario(Long id) throws BancoDadosException {
         pessoaService.inativar(id);
     }
     

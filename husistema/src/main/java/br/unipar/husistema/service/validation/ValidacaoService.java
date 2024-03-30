@@ -14,9 +14,9 @@ import br.unipar.husistema.service.PacienteService;
 import br.unipar.husistema.service.exception.BancoDadosException;
 import br.unipar.husistema.service.exception.Campo;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import br.unipar.husistema.util.Util;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,11 +30,6 @@ public class ValidacaoService {
     public static void validarInsercaoMedico(InserirMedicoDTO dto) throws ValidacaoExcecao {
         campos = new ArrayList<>();
         
-        if (dto == null) {
-            campos.add(new Campo("Todos", "Devem ser preenchido!"));
-            throw new ValidacaoExcecao(campos);
-        }
-
         if (dto.getCrm().isEmpty() || dto.getCrm().isBlank()) {
             campos.add(new Campo("CRM", "Deve ser preenchido!"));
         }
@@ -65,11 +60,6 @@ public class ValidacaoService {
     public static void validarInsercaoPaciente(InserirPacienteDTO dto) throws ValidacaoExcecao {
         campos = new ArrayList<>();
         
-        if (dto == null) {
-            campos.add(new Campo("Todos", "Devem ser preenchido!"));
-            throw new ValidacaoExcecao(campos);
-        }
-
         if (dto.getNome().isEmpty() || dto.getNome().isBlank()) {
             campos.add(new Campo("Nome", "Deve ser preenchido!"));
         }
@@ -100,11 +90,6 @@ public class ValidacaoService {
             campos.add(new Campo("Id", "Devem ser informado!"));
             throw new ValidacaoExcecao(campos);
         }
-        
-        if (dto == null) {
-            campos.add(new Campo("Todos", "Devem ser preenchido!"));
-            throw new ValidacaoExcecao(campos);
-        }
 
         if (dto.getNome().isEmpty() || dto.getNome().isBlank()) {
             campos.add(new Campo("Nome", "Deve ser preenchido!"));
@@ -127,58 +112,57 @@ public class ValidacaoService {
         pacienteService = new PacienteService();
         campos = new ArrayList<>();
         
-        if (dto == null) {
-            campos.add(new Campo("Todos", "Devem ser preenchido!"));
-            throw new ValidacaoExcecao(campos);
+        Calendar dataAgora = Calendar.getInstance();
+        dataAgora.setTime(new Date());
+        dataAgora.add(Calendar.MINUTE, 30);
+        
+        //Verificar se a data é do passado
+        if (dto.dataConsulta().compareTo(new Date()) < 0) {
+            campos.add(new Campo("Data da Consulta", "Data inválida!"));
+        //Verificar se o dia é domingo
+        } else if (dto.dataConsulta().getDay() == 0) {
+            campos.add(new Campo("Data da Consulta", "Data inválida!"));
+        //Verificar se a data da consulta foi marcada com antecedência
+        } else if (dto.dataConsulta().compareTo(dataAgora.getTime()) < 0) {
+            campos.add(new Campo("Horário da Consulta", "O agendamento deve ser feito 30 minutos de antecedência!"));
+        //Verificar se o horário está entre 7 e 18 horas
+        } else if (dto.dataConsulta().getHours() < 7 || (dto.dataConsulta().getHours() == 17 && dto.dataConsulta().getMinutes() > 0)) {
+            campos.add(new Campo("Horário da Consulta", "O horário deve ser estar entre às 7 e 17 horas!"));
         }
         
-//        if (dto.getDataConsulta()) {
-//            campos.add(new Campo("Data da Consulta", "Data inválida!"));
-//        } else if (Duration.between(dto.getDataConsulta(), LocalDateTime.now()).toMinutes() > 30) {
-//            campos.add(new Campo("Horário da Consulta", "O agendamento deve ser feito 30 minutos de antecedência!"));
-//        }
-//        
-//        if (dto.getDataConsulta().getHour() < 7 || dto.getDataConsulta().getHour() > 18) {
-//            campos.add(new Campo("Horário da Consulta", "O horário deve ser estar entre às 7 e 18 horas!"));
-//        }
-        
-//        try {
-//            Paciente entity = pacienteService.acharPorId(dto.getPacienteId());
-//            if (entity == null) {
-//                campos.add(new Campo("Paciente", "Paciente não contrado!"));
-//            } else if (!entity.isAtivo()) {
-//                campos.add(new Campo("Paciente", "Paciente inativo!"));
-//            } 
-//        } catch (BancoDadosException e) {
-//            throw new BancoDadosException("Falha na conexão");
-//        }
-        
-        if (consultaService.cansultarAgendamentoPaciente(dto.dataConsulta(), dto.getPacienteId())) {
-            campos.add(new Campo("Paciente", "Paciente já possuí agendamento na data informada!"));
-        }
-        
-        if (consultaService.cansultarAgendamentoMedico(dto.dataConsulta(), dto.getMedicoId())) {
-            campos.add(new Campo("Médico", "Médico já possuí agendamento na data informada!"));
-        }
-        
-        if (dto.getMedicoId()!= null) {
-            try {
-                Medico entity = medicoService.acharPorId(dto.getMedicoId());
-                if (entity == null) {
+        try {
+            Paciente paciente = pacienteService.acharPorId(dto.getPacienteId());
+            if (paciente == null) {
+                campos.add(new Campo("Paciente", "Paciente não contrado!"));
+            } else if (!paciente.isAtivo()) {
+                campos.add(new Campo("Paciente", "Paciente inativo!"));
+            } 
+            
+            if (consultaService.cansultarAgendamentoPaciente(dto.getPacienteId(), dto.dataConsulta())) {
+                campos.add(new Campo("Paciente", "Paciente já possuí agendamento na data informada!"));
+            }
+            
+            if (dto.getMedicoId()!= null) {
+                Medico medico = medicoService.acharPorId(dto.getMedicoId());
+                if (medico == null) {
                     campos.add(new Campo("Médico", "Médico não contrado!"));
-                } else if (!entity.isAtivo()) {
+                } else if (!medico.isAtivo()) {
                     campos.add(new Campo("Médico", "Médico inativo!"));
                 }
-            } catch (BancoDadosException e) {
-                throw new BancoDadosException("Falha na conexão");
-            }
-        } else {
-            Long id = medicoService.acharMedicoDisponivel();
-            if (id == null) {
-                campos.add(new Campo("Médico", "Não tem médico disponível!"));
+                
+                if (consultaService.cansultarAgendamentoMedico(dto.dataConsulta(), dto.getMedicoId())) {
+                    campos.add(new Campo("Médico", "Médico já possuí agendamento na data informada!"));
+                }
             } else {
-                dto.setMedicoId(id);
+                Long id = medicoService.acharMedicoDisponivel();
+                if (id == null) {
+                    campos.add(new Campo("Médico", "Não tem médico disponível!"));
+                } else {
+                    dto.setMedicoId(id);
+                }
             }
+        } catch (BancoDadosException e) {
+            throw new BancoDadosException("Falha na conexão");
         }
         
         if (!campos.isEmpty()) {
@@ -194,7 +178,7 @@ public class ValidacaoService {
             throw new ValidacaoExcecao(campos);
         }
         
-        if (consultaService.cansultarDataConsulta(id_consulta).getHour() < 23) {
+        if (consultaService.cansultarDataConsulta(id_consulta).compareTo(new Date()) < 0) {
             campos.add(new Campo("Data Cancelamento", "O cancelamento deve ocorrer com antecedência mínima de 24 horas!"));
         }
         

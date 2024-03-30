@@ -1,7 +1,6 @@
 package br.unipar.husistema.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -83,13 +82,6 @@ public class Consulta implements Serializable {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
-    }
-    
-    public Date getTerminoConsulta() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dataConsulta);
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        return calendar.getTime();
     }
 
     @Override

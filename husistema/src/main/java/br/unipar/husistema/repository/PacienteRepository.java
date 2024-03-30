@@ -33,7 +33,7 @@ public class PacienteRepository {
             + "SELECT * "
             + "FROM " + TABELA + " pa "
             + "INNER JOIN " + TABELA_PESSOA + " pe ON pe." + COLUNAS_PESSOA[0] + " = pa." + COLUNAS[0] + " "
-            + "WHERE pa." + COLUNAS[0] + " = ?";
+            + "WHERE pa." + COLUNAS[0] + " = ?;";
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);

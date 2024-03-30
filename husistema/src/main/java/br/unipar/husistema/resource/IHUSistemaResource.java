@@ -17,10 +17,10 @@ import java.util.List;
 public interface IHUSistemaResource {
        
     @WebMethod
-    public void atualizar(Long id, AtualizarPessoaDTO dto) throws BancoDadosException, ValidacaoExcecao ;
+    public void atualizarUsuario(Long id, AtualizarPessoaDTO dto) throws BancoDadosException, ValidacaoExcecao ;
       
     @WebMethod
-    public void inativar(Long id) throws BancoDadosException;
+    public void inativarUsuario(Long id) throws BancoDadosException;
     
     @WebMethod
     public void inserirMedico(InserirMedicoDTO dto) throws ValidacaoExcecao, Exception;
