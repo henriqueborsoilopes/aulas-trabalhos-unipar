@@ -42,7 +42,10 @@ public class EnderecoRepository {
             + "UPDATE " + TABELA + " "
             + "SET " + COLUNAS[1] + " = ?, " + COLUNAS[2] + " = ?, " + COLUNAS[3] + " = ?, " + COLUNAS[4] + " = ?, " + COLUNAS[5] + " = ?, " + COLUNAS[6] + " = ?, " + COLUNAS[7] + " = ? "
             + "WHERE " + COLUNAS[0] + " = "
-            + "(SELECT e." + COLUNAS[0] + " FROM " + TABELA + " e LEFT JOIN " + TABELA_PESSOA + " p ON p." + COLUNAS_PESSOA[1] + " = e." + COLUNAS[0] + " WHERE p." + COLUNAS_PESSOA[0] + " = ?);";
+                + "(SELECT e." + COLUNAS[0] + " "
+                + "FROM " + TABELA + " e "
+                + "LEFT JOIN " + TABELA_PESSOA + " p ON p." + COLUNAS_PESSOA[1] + " = e." + COLUNAS[0] + " "
+                + "WHERE p." + COLUNAS_PESSOA[0] + " = ?);";
         
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, endereco.getLogradouro());

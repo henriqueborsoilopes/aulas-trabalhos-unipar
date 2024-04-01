@@ -25,7 +25,6 @@ br\unipar\husistema\dto\AtualizarPessoaDTO.class
 br\unipar\husistema\dto\InserirMedicoDTO.class
 br\unipar\husistema\resource\imple\HUSistemaResourceImple.class
 br\unipar\husistema\mapper\ConsultaMapper.class
-br\unipar\husistema\util\Util.class
 br\unipar\husistema\service\PacienteService.class
 br\unipar\husistema\service\exception\Campo.class
 br\unipar\husistema\repository\EnderecoRepository.class

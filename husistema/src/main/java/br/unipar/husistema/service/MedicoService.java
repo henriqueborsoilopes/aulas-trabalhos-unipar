@@ -13,6 +13,7 @@ import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import br.unipar.husistema.service.validation.ValidacaoService;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MedicoService {
@@ -52,10 +53,10 @@ public class MedicoService {
         }
     }
     
-    public Long acharMedicoDisponivel() {
+    public Long acharMedicoDisponivel(LocalDateTime data) {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            return medicoRepository.acharMedicoDisponivel(connection);
+            return medicoRepository.acharMedicoDisponivel(connection, data);
         } catch (SQLException e) {
             return null;
         } finally {

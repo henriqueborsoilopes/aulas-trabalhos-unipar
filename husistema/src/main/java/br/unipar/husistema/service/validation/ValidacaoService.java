@@ -150,7 +150,7 @@ public class ValidacaoService {
                     campos.add(new Campo("Médico", "Médico já possuí agendamento na data informada!"));
                 }
             } else {
-                Long id = medicoService.acharMedicoDisponivel();
+                Long id = medicoService.acharMedicoDisponivel(dto.getDataHorario());
                 if (id == null) {
                     campos.add(new Campo("Médico", "Não tem médico disponível!"));
                 } else {
