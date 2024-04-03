@@ -15,7 +15,7 @@ import jakarta.jws.WebService;
 import java.util.List;
 import br.unipar.husistema.factory.IServiceFactory;
 
-@WebService(endpointInterface = "br.unipar.husistema.resource.IHUSistemaResource")
+@WebService(serviceName = "resource", endpointInterface = "br.unipar.husistema.resource.IHUSistemaResource")
 public class HUSistemaResourceImple implements IHUSistemaResource {
     
     private final IServiceFactory service = new ServiceFactoryImple();

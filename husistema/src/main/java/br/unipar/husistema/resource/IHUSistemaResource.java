@@ -15,7 +15,7 @@ import jakarta.jws.WebResult;
 import jakarta.jws.WebService;
 import java.util.List;
 
-@WebService(serviceName = "HUSistemaResource")
+@WebService
 public interface IHUSistemaResource {
        
     @WebMethod(operationName = "atualizar_usuario", action = "")
