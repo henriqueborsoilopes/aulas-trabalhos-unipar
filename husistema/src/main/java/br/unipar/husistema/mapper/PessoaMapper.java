@@ -5,13 +5,13 @@ import br.unipar.husistema.entity.Pessoa;
 
 public class PessoaMapper {
     
-    public Pessoa getEntity(AtualizarPessoaDTO dto) {
+    public static Pessoa getEntity(AtualizarPessoaDTO dto) {
         return new Pessoa(
                 null, 
                 dto.getNome(), 
                 null, 
                 dto.getTelefone(), 
                 true, 
-                EnderecoMapper.getEntity(dto.getEndereco()));
+                null);
     }
 }

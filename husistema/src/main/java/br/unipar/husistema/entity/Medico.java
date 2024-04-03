@@ -11,8 +11,8 @@ public class Medico extends Pessoa {
         super();
     }
 
-    public Medico(Long id, String nome, String email, String telefone, boolean ativo, Endereco endereco, String crm, EspecialidadeEnum tipoEspecialidade) {
-        super(id, nome, email, telefone, ativo, endereco);
+    public Medico(Long id, String nome, String email, String telefone, boolean ativo, Long idEndereco, String crm, EspecialidadeEnum tipoEspecialidade) {
+        super(id, nome, email, telefone, ativo, idEndereco);
         this.crm = crm;
         this.tipoEspecialidade = tipoEspecialidade == null ? null : tipoEspecialidade.getCodigo();
     }

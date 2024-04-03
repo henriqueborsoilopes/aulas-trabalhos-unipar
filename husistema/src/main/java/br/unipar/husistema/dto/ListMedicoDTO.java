@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class ListMedicoDTO implements Serializable  {
     
+    private Long id;
     private String nome;
     private String email;
     private String crm;
@@ -11,11 +12,20 @@ public class ListMedicoDTO implements Serializable  {
     
     public ListMedicoDTO() { }
 
-    public ListMedicoDTO(String nome, String email, String crm, Integer tipoEspecialidade) {
+    public ListMedicoDTO(Long id, String nome, String email, String crm, Integer tipoEspecialidade) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.crm = crm;
         this.tipoEspecialidade = tipoEspecialidade;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {

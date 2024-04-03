@@ -10,20 +10,19 @@ public class Pessoa implements Serializable {
     private String email;
     private String telefone;
     private boolean ativo;
-    
-    private Endereco endereco;
+    private Long idEndereco;
     
     public Pessoa() {
         this.ativo = true;
     }
 
-    public Pessoa(Long id, String nome, String email, String telefone, boolean ativo, Endereco endereco) {
+    public Pessoa(Long id, String nome, String email, String telefone, boolean ativo, Long idEndereco) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.ativo = ativo;
-        this.endereco = endereco;
+        this.idEndereco = idEndereco;
     }
 
     public Long getId() {
@@ -66,12 +65,12 @@ public class Pessoa implements Serializable {
         this.ativo = ativo;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public Long getIdEndereco() {
+        return idEndereco;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setIdEndereco(Long idEndereco) {
+        this.idEndereco = idEndereco;
     }
 
     @Override

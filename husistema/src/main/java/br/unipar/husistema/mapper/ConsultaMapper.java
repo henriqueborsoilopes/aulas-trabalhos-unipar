@@ -8,7 +8,7 @@ import br.unipar.husistema.entity.Paciente;
 
 public class ConsultaMapper {
     
-    public Consulta getEntity(CancelarConsultaDTO dto) {
+    public static Consulta getEntity(CancelarConsultaDTO dto) {
         return new Consulta(
                 null, 
                 null, 
@@ -19,7 +19,7 @@ public class ConsultaMapper {
                 null);
     }
     
-    public Consulta getEntity(InserirConsultaDTO dto) {
+    public static Consulta getEntity(InserirConsultaDTO dto) {
         Medico medico = new Medico();
         medico.setId(dto.getMedicoId());
         Paciente paciente = new Paciente();

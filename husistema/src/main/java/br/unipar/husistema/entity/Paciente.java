@@ -8,8 +8,8 @@ public class Paciente extends Pessoa {
         super();
     }
 
-    public Paciente(Long id, String nome, String email, String telefone, boolean ativo, Endereco endereco, String cpf) {
-        super(id, nome, email, telefone, ativo, endereco);
+    public Paciente(Long id, String nome, String email, String telefone, boolean ativo, Long idEndereco, String cpf) {
+        super(id, nome, email, telefone, ativo, idEndereco);
         this.cpf = cpf;
     }
 

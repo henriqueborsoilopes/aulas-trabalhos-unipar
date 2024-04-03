@@ -9,36 +9,37 @@ import java.util.stream.Collectors;
 
 public class PacienteMapper {
     
-    public Paciente getEntity(AtualizarPessoaDTO dto) {
+    public static Paciente getEntity(AtualizarPessoaDTO dto) {
         return new Paciente(
                 null, 
                 dto.getNome(), 
                 null, 
                 dto.getTelefone(), 
                 true, 
-                EnderecoMapper.getEntity(dto.getEndereco()),
+                null,
                 null);
     }
     
-    public Paciente getEntity(InserirPacienteDTO dto) {
+    public static Paciente getEntity(InserirPacienteDTO dto) {
         return new Paciente(
                 null, 
                 dto.getNome(), 
                 dto.getEmail(), 
                 dto.getTelefone(), 
                 true, 
-                EnderecoMapper.getEntity(dto.getEndereco()),
+                null,
                 dto.getCpf());
     }
     
-    public ListPacienteDTO getDTO(Paciente entity) {
-        return new ListPacienteDTO( 
+    public static ListPacienteDTO getDTO(Paciente entity) {
+        return new ListPacienteDTO(
+                entity.getId(),
                 entity.getNome(), 
                 entity.getEmail(), 
                 entity.getCpf());
     }
 
-    public List<ListPacienteDTO> getLitDTO(List<Paciente> entities) {
-        return entities.stream().map(this::getDTO).collect(Collectors.toList());
+    public static List<ListPacienteDTO> getLitDTO(List<Paciente> entities) {
+        return entities.stream().map(x -> getDTO(x)).collect(Collectors.toList());
     }
 }

@@ -4,7 +4,7 @@ import jakarta.xml.ws.WebFault;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebFault
+@WebFault(name = "validacao")
 public class ValidacaoExcecao extends Exception {
         
     private List<Campo> campos = new ArrayList<>();
