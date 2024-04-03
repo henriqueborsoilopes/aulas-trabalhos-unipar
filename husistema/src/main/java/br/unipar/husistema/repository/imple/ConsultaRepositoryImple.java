@@ -26,8 +26,8 @@ public class ConsultaRepositoryImple implements IConsultaRepository {
         try (PreparedStatement ps = ConnectionFactory.getConexao().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             ps.setTimestamp(1, Timestamp.valueOf(consulta.getDataConsulta()));
             ps.setBoolean(2, false);
-            ps.setLong(3, consulta.getMedico().getId());
-            ps.setLong(4, consulta.getPaciente().getId());
+            ps.setLong(3, consulta.getIdMedico());
+            ps.setLong(4, consulta.getIdPaciente());
             ps.execute();        
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {

@@ -8,16 +8,16 @@ public class ListMedicoDTO implements Serializable  {
     private String nome;
     private String email;
     private String crm;
-    private Integer tipoEspecialidade;
+    private String especialidade;
     
     public ListMedicoDTO() { }
 
-    public ListMedicoDTO(Long id, String nome, String email, String crm, Integer tipoEspecialidade) {
+    public ListMedicoDTO(Long id, String nome, String email, String crm, String especialidade) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.crm = crm;
-        this.tipoEspecialidade = tipoEspecialidade;
+        this.especialidade = especialidade;
     }
 
     public Long getId() {
@@ -52,11 +52,11 @@ public class ListMedicoDTO implements Serializable  {
         this.crm = crm;
     }
 
-    public Integer getTipoEspecialidade() {
-        return tipoEspecialidade;
+    public String getEspecialidade() {
+        return especialidade;
     }
 
-    public void setTipoEspecialidade(Integer tipoEspecialidade) {
-        this.tipoEspecialidade = tipoEspecialidade;
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
     }
 }

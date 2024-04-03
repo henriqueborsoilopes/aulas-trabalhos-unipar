@@ -11,20 +11,19 @@ public class Consulta implements Serializable {
     private LocalDateTime dataCancelamento;
     private String descriCancelamento;
     private boolean cancelado;
-    
-    private Medico medico;
-    private Paciente paciente;
+    private Long idMedico;
+    private Long idPaciente;
     
     public Consulta() { }
 
-    public Consulta(Long id, LocalDateTime dataConsulta, LocalDateTime dataCancelamento, String descriCancelamento, boolean cancelado, Medico medico, Paciente paciente) {
+    public Consulta(Long id, LocalDateTime dataConsulta, LocalDateTime dataCancelamento, String descriCancelamento, boolean cancelado, Long idMedico, Long idPaciente) {
         this.id = id;
         this.dataConsulta = dataConsulta;
         this.dataCancelamento = dataCancelamento;
         this.descriCancelamento = descriCancelamento;
         this.cancelado = cancelado;
-        this.medico = medico;
-        this.paciente = paciente;
+        this.idMedico = idMedico;
+        this.idPaciente = idPaciente;
     }
 
     public Long getId() {
@@ -67,20 +66,20 @@ public class Consulta implements Serializable {
         this.cancelado = cancelado;
     }
 
-    public Medico getMedico() {
-        return medico;
+    public Long getIdMedico() {
+        return idMedico;
     }
 
-    public void setMedico(Medico medico) {
-        this.medico = medico;
+    public void setIdMedico(Long idMedico) {
+        this.idMedico = idMedico;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public Long getIdPaciente() {
+        return idPaciente;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setIdPaciente(Long idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class MedicoMapper {
                 entity.getNome(), 
                 entity.getEmail(), 
                 entity.getCrm(), 
-                entity.getTipoEspecialidade().getCodigo());
+                entity.getTipoEspecialidade().getDescricao());
     }
 
     public static List<ListMedicoDTO> getLitDTO(List<Medico> entities) {
