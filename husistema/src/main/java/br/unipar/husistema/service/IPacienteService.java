@@ -7,7 +7,7 @@ import br.unipar.husistema.service.exception.BancoDadosExcecao;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import java.util.List;
 
-public interface PacienteService {
+public interface IPacienteService {
     
     public Paciente inserir(InserirPacienteDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
     public Paciente acharPorId(Long id) throws BancoDadosExcecao;

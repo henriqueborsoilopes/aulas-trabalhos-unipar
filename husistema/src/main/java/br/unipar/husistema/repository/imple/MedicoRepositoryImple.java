@@ -3,7 +3,6 @@ package br.unipar.husistema.repository.imple;
 import br.unipar.husistema.entity.Medico;
 import br.unipar.husistema.entity.enums.EspecialidadeEnum;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.repository.MedicoRepository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +10,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import br.unipar.husistema.repository.IMedicoRepository;
 
-public class MedicoRepositoryImple implements MedicoRepository {
+public class MedicoRepositoryImple implements IMedicoRepository {
     
     private static final String TABELA = "medico";
     private static final String[] COLUNAS = {"id_pessoa", "crm", "tipo_especialidade"};

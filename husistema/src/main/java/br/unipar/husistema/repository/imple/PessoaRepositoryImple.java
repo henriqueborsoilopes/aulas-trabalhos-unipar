@@ -2,13 +2,13 @@ package br.unipar.husistema.repository.imple;
 
 import br.unipar.husistema.entity.Pessoa;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.repository.PessoaRepository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import br.unipar.husistema.repository.IPessoaRepository;
 
-public class PessoaRepositoryImple implements PessoaRepository {
+public class PessoaRepositoryImple implements IPessoaRepository {
     
     private static final String TABELA = "pessoa";
     private static final String[] COLUNAS = {"id", "nome", "email", "telefone", "ativo", "id_endereco"};

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface MedicoRepository {
+public interface IMedicoRepository {
     
     public void inserir(Medico medico) throws SQLException;
     public Long acharMedicoDisponivel(LocalDateTime data) throws SQLException;

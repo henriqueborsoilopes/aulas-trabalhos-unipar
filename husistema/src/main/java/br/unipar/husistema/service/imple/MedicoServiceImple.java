@@ -5,10 +5,8 @@ import br.unipar.husistema.dto.ListMedicoDTO;
 import br.unipar.husistema.entity.Endereco;
 import br.unipar.husistema.entity.Medico;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.factory.RepositoryFactory;
 import br.unipar.husistema.mapper.EnderecoMapper;
 import br.unipar.husistema.mapper.MedicoMapper;
-import br.unipar.husistema.service.MedicoService;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import br.unipar.husistema.service.validation.MedicoValidacao;
@@ -17,12 +15,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import br.unipar.husistema.service.IMedicoService;
+import br.unipar.husistema.factory.IRepositoryFactory;
 
-public class MedicoServiceImple implements MedicoService {
+public class MedicoServiceImple implements IMedicoService {
     
-    private final RepositoryFactory repository;
+    private final IRepositoryFactory repository;
     
-    public MedicoServiceImple(RepositoryFactory repository) {
+    public MedicoServiceImple(IRepositoryFactory repository) {
         this.repository = repository;
     }
     

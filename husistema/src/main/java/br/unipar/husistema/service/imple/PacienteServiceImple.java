@@ -5,10 +5,8 @@ import br.unipar.husistema.dto.ListPacienteDTO;
 import br.unipar.husistema.entity.Endereco;
 import br.unipar.husistema.entity.Paciente;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.factory.RepositoryFactory;
 import br.unipar.husistema.mapper.EnderecoMapper;
 import br.unipar.husistema.mapper.PacienteMapper;
-import br.unipar.husistema.service.PacienteService;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import br.unipar.husistema.service.validation.PacienteValidacao;
@@ -16,12 +14,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import br.unipar.husistema.service.IPacienteService;
+import br.unipar.husistema.factory.IRepositoryFactory;
 
-public class PacienteServiceImple implements PacienteService {
+public class PacienteServiceImple implements IPacienteService {
     
-    private final RepositoryFactory repository;
+    private final IRepositoryFactory repository;
     
-    public PacienteServiceImple(RepositoryFactory repository) {
+    public PacienteServiceImple(IRepositoryFactory repository) {
         this.repository = repository;
     }
     

@@ -4,7 +4,6 @@ import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
 import br.unipar.husistema.entity.Medico;
 import br.unipar.husistema.entity.Paciente;
-import br.unipar.husistema.factory.ServiceFactory;
 import br.unipar.husistema.factory.imple.ServiceFactoryImple;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
 import br.unipar.husistema.service.exception.Campo;
@@ -13,10 +12,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import br.unipar.husistema.factory.IServiceFactory;
 
 public class ConsultaValidacao {
 
-    private static ServiceFactory service;
+    private static IServiceFactory service;
     
     private static List<Campo> campos;
     

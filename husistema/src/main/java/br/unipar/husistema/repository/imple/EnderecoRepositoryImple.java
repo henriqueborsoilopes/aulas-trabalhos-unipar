@@ -2,13 +2,13 @@ package br.unipar.husistema.repository.imple;
 
 import br.unipar.husistema.entity.Endereco;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.repository.EnderecoRepository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import br.unipar.husistema.repository.IEnderecoRepository;
 
-public class EnderecoRepositoryImple implements EnderecoRepository {
+public class EnderecoRepositoryImple implements IEnderecoRepository {
     
     private static final String TABELA = "endereco";
     private static final String[] COLUNAS = {"id", "logradouro", "numero", "complemento", "bairro", "cidade", "uf", "cep"};

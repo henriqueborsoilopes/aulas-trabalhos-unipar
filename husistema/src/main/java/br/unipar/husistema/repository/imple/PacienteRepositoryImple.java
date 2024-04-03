@@ -2,14 +2,14 @@ package br.unipar.husistema.repository.imple;
 
 import br.unipar.husistema.entity.Paciente;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.repository.PacienteRepository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import br.unipar.husistema.repository.IPacienteRepository;
 
-public class PacienteRepositoryImple implements PacienteRepository {
+public class PacienteRepositoryImple implements IPacienteRepository {
     
     private static final String TABELA = "paciente";
     private static final String[] COLUNAS = {"id_pessoa", "cpf"};

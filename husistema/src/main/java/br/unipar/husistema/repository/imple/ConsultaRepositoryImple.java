@@ -2,7 +2,6 @@ package br.unipar.husistema.repository.imple;
 
 import br.unipar.husistema.entity.Consulta;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.repository.ConsultaRepository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +9,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import br.unipar.husistema.repository.IConsultaRepository;
 
-public class ConsultaRepositoryImple implements ConsultaRepository {
+public class ConsultaRepositoryImple implements IConsultaRepository {
     
     private static final String TABELA = "consulta";
     private static final String[] COLUNAS = {"id", "data_consulta", "data_cancelamento", 

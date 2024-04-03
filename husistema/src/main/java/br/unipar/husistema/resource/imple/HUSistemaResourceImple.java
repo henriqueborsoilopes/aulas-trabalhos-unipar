@@ -7,18 +7,18 @@ import br.unipar.husistema.dto.InserirMedicoDTO;
 import br.unipar.husistema.dto.InserirPacienteDTO;
 import br.unipar.husistema.dto.ListMedicoDTO;
 import br.unipar.husistema.dto.ListPacienteDTO;
-import br.unipar.husistema.factory.ServiceFactory;
 import br.unipar.husistema.factory.imple.ServiceFactoryImple;
 import br.unipar.husistema.resource.IHUSistemaResource;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import jakarta.jws.WebService;
 import java.util.List;
+import br.unipar.husistema.factory.IServiceFactory;
 
 @WebService(endpointInterface = "br.unipar.husistema.resource.IHUSistemaResource")
 public class HUSistemaResourceImple implements IHUSistemaResource {
     
-    private final ServiceFactory service = new ServiceFactoryImple();
+    private final IServiceFactory service = new ServiceFactoryImple();
     
     @Override
     public void atualizarUsuario(Long id_usuario, Long id_endereco, AtualizarPessoaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {

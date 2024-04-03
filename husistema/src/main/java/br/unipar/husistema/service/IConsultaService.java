@@ -7,7 +7,7 @@ import br.unipar.husistema.service.exception.BancoDadosExcecao;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import java.time.LocalDateTime;
 
-public interface ConsultaService {
+public interface IConsultaService {
     
     public Consulta inserir(InserirConsultaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
     public boolean cansultarAgendamentoPaciente(Long id_paciente, LocalDateTime data) throws BancoDadosExcecao;

@@ -4,22 +4,22 @@ import br.unipar.husistema.dto.AtualizarPessoaDTO;
 import br.unipar.husistema.entity.Endereco;
 import br.unipar.husistema.entity.Pessoa;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.factory.RepositoryFactory;
 import br.unipar.husistema.mapper.EnderecoMapper;
 import br.unipar.husistema.mapper.PessoaMapper;
-import br.unipar.husistema.service.PessoaService;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import br.unipar.husistema.service.validation.PessoaValidacao;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import br.unipar.husistema.service.IPessoaService;
+import br.unipar.husistema.factory.IRepositoryFactory;
 
-public class PessoaServiceImple implements PessoaService {
+public class PessoaServiceImple implements IPessoaService {
     
-    private final RepositoryFactory repository;
+    private final IRepositoryFactory repository;
     
-    public PessoaServiceImple(RepositoryFactory repository) {
+    public PessoaServiceImple(IRepositoryFactory repository) {
         this.repository = repository;
     }
     

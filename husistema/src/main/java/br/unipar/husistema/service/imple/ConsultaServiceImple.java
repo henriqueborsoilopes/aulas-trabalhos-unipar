@@ -4,9 +4,7 @@ import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
 import br.unipar.husistema.entity.Consulta;
 import br.unipar.husistema.factory.ConnectionFactory;
-import br.unipar.husistema.factory.RepositoryFactory;
 import br.unipar.husistema.mapper.ConsultaMapper;
-import br.unipar.husistema.service.ConsultaService;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
 import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import br.unipar.husistema.service.validation.ConsultaValidacao;
@@ -14,12 +12,14 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import br.unipar.husistema.service.IConsultaService;
+import br.unipar.husistema.factory.IRepositoryFactory;
 
-public class ConsultaServiceImple implements ConsultaService {
+public class ConsultaServiceImple implements IConsultaService {
     
-    private final RepositoryFactory repository;
+    private final IRepositoryFactory repository;
     
-    public ConsultaServiceImple(RepositoryFactory repository) {
+    public ConsultaServiceImple(IRepositoryFactory repository) {
         this.repository = repository;
     }
 

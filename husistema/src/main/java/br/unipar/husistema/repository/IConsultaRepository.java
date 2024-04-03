@@ -4,7 +4,7 @@ import br.unipar.husistema.entity.Consulta;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public interface ConsultaRepository {
+public interface IConsultaRepository {
     
     public Consulta inserir(Consulta consulta) throws SQLException;
     public boolean cansultarAgendamentoPaciente(Long id_paciente, LocalDateTime date) throws SQLException;

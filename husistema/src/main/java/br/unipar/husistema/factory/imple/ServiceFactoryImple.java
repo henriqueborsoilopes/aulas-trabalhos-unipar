@@ -1,37 +1,37 @@
 package br.unipar.husistema.factory.imple;
 
-import br.unipar.husistema.factory.RepositoryFactory;
-import br.unipar.husistema.factory.ServiceFactory;
-import br.unipar.husistema.service.ConsultaService;
-import br.unipar.husistema.service.MedicoService;
-import br.unipar.husistema.service.PacienteService;
-import br.unipar.husistema.service.PessoaService;
 import br.unipar.husistema.service.imple.ConsultaServiceImple;
 import br.unipar.husistema.service.imple.MedicoServiceImple;
 import br.unipar.husistema.service.imple.PacienteServiceImple;
 import br.unipar.husistema.service.imple.PessoaServiceImple;
+import br.unipar.husistema.service.IConsultaService;
+import br.unipar.husistema.service.IMedicoService;
+import br.unipar.husistema.service.IPacienteService;
+import br.unipar.husistema.service.IPessoaService;
+import br.unipar.husistema.factory.IRepositoryFactory;
+import br.unipar.husistema.factory.IServiceFactory;
 
-public class ServiceFactoryImple implements ServiceFactory {
+public class ServiceFactoryImple implements IServiceFactory {
     
-    private final RepositoryFactory repository = new RepositoryFactoryImple();
+    private final IRepositoryFactory repository = new RepositoryFactoryImple();
 
     @Override
-    public ConsultaService getConsultaService() {
+    public IConsultaService getConsultaService() {
         return new ConsultaServiceImple(repository);
     }
 
     @Override
-    public MedicoService getMedicoService() {
+    public IMedicoService getMedicoService() {
         return new MedicoServiceImple(repository);
     }
 
     @Override
-    public PacienteService getPacienteService() {
+    public IPacienteService getPacienteService() {
         return new PacienteServiceImple(repository);
     }
 
     @Override
-    public PessoaService getPessoaService() {
+    public IPessoaService getPessoaService() {
         return new PessoaServiceImple(repository);
     }
 }

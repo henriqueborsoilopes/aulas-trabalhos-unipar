@@ -8,7 +8,7 @@ import br.unipar.husistema.service.exception.ValidacaoExcecao;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface MedicoService {
+public interface IMedicoService {
     
     public Medico inserir(InserirMedicoDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
     public Long acharMedicoDisponivel(LocalDateTime data) throws BancoDadosExcecao;
