@@ -39,6 +39,7 @@ public class PessoaServiceImple implements IPessoaService {
             ConnectionFactory.commit();
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }
@@ -53,6 +54,7 @@ public class PessoaServiceImple implements IPessoaService {
             ConnectionFactory.commit();
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }

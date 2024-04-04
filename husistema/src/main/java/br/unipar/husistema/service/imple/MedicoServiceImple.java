@@ -41,6 +41,7 @@ public class MedicoServiceImple implements IMedicoService {
             ConnectionFactory.commit();
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }
@@ -54,7 +55,7 @@ public class MedicoServiceImple implements IMedicoService {
             return repository.getMedicoRepository().acharMedicoDisponivel(data);
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }
@@ -67,7 +68,7 @@ public class MedicoServiceImple implements IMedicoService {
             return repository.getMedicoRepository().acharPorId(id);
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }
@@ -80,7 +81,7 @@ public class MedicoServiceImple implements IMedicoService {
             return MedicoMapper.getLitDTO(repository.getMedicoRepository().acharTodos());
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }

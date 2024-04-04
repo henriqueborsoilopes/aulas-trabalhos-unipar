@@ -40,6 +40,7 @@ public class PacienteServiceImple implements IPacienteService {
             ConnectionFactory.commit();
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }
@@ -53,7 +54,7 @@ public class PacienteServiceImple implements IPacienteService {
             return repository.getPacienteRepository().acharPorId(id);
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }
@@ -66,7 +67,7 @@ public class PacienteServiceImple implements IPacienteService {
             return PacienteMapper.getLitDTO(repository.getPacienteRepository().acharTodos());
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
         } finally {
             ConnectionFactory.fecharConexao();
         }
