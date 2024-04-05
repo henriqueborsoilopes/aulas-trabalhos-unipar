@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @WebFault(name = "validacao")
-public class ValidacaoExcecao extends Exception {
+public class ValidarExcecao extends Exception {
         
     private final Map<String, String> erros = new HashMap<>();
     
-    public ValidacaoExcecao(String msg) {
+    public ValidarExcecao(String msg) {
         super(msg);
     }
     

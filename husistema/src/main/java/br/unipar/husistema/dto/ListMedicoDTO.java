@@ -9,15 +9,17 @@ public class ListMedicoDTO implements Serializable  {
     private String email;
     private String crm;
     private String especialidade;
+    private boolean ativo;
     
     public ListMedicoDTO() { }
 
-    public ListMedicoDTO(Long id, String nome, String email, String crm, String especialidade) {
+    public ListMedicoDTO(Long id, String nome, String email, String crm, String especialidade, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.crm = crm;
         this.especialidade = especialidade;
+        this.ativo = ativo;
     }
 
     public Long getId() {
@@ -58,5 +60,13 @@ public class ListMedicoDTO implements Serializable  {
 
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class MedicoMapper {
     
-    public static Medico getEntity(InserirMedicoDTO dto) {
+    public static Medico getEntidade(InserirMedicoDTO dto) {
         return new Medico(
                 null, 
                 dto.getNome(), 
@@ -27,10 +27,11 @@ public class MedicoMapper {
                 entity.getNome(), 
                 entity.getEmail(), 
                 entity.getCrm(), 
-                entity.getTipoEspecialidade().getDescricao());
+                entity.getTipoEspecialidade().getDescricao(),
+                entity.isAtivo());
     }
 
-    public static List<ListMedicoDTO> getLitDTO(List<Medico> entities) {
+    public static List<ListMedicoDTO> getListaDTO(List<Medico> entities) {
         return entities.stream().map(x -> getDTO(x)).collect(Collectors.toList());
     }
 }

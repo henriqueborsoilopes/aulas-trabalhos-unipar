@@ -4,18 +4,15 @@ import br.unipar.husistema.dto.InserirPacienteDTO;
 import br.unipar.husistema.dto.ListPacienteDTO;
 import br.unipar.husistema.entity.Endereco;
 import br.unipar.husistema.entity.Paciente;
-import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.mapper.EnderecoMapper;
 import br.unipar.husistema.mapper.PacienteMapper;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
-import br.unipar.husistema.service.exception.ValidacaoExcecao;
-import br.unipar.husistema.service.validation.PacienteValidacao;
-import java.sql.SQLException;
+import br.unipar.husistema.service.exception.ValidarExcecao;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import br.unipar.husistema.service.IPacienteService;
 import br.unipar.husistema.factory.IRepositoryFactory;
+import br.unipar.husistema.service.connection.ConexaoBD;
+import br.unipar.husistema.service.validation.Validar;
 
 public class PacienteServiceImple implements IPacienteService {
     
@@ -26,50 +23,34 @@ public class PacienteServiceImple implements IPacienteService {
     }
     
     @Override
-    public Paciente inserir(InserirPacienteDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {
-        ConnectionFactory.abrirConexao();
-        ConnectionFactory.manterConexaoAberta(true);
-        ConnectionFactory.autoCommit(false);
-        PacienteValidacao.validarInsercaoPaciente(dto);
-        Paciente paciente = PacienteMapper.getEntity(dto);
-        Endereco endereco = EnderecoMapper.getEntity(dto.getEndereco());
-        try {
-            paciente.setIdEndereco(repository.getEnderecoRepository().inserir(endereco).getId());
-            paciente.setId(repository.getPessoaRepository().inserir(paciente).getId());
-            repository.getPacienteRepository().inserir(paciente);
-            ConnectionFactory.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
-        } finally {
-            ConnectionFactory.fecharConexao();
-        }
+    public Paciente inserir(InserirPacienteDTO dto) throws ValidarExcecao {
+        ConexaoBD.abrirConexao();
+        ConexaoBD.manterConexaoAberta(true);
+        ConexaoBD.autoCommit(false);
+        Validar.insercaoPaciente(dto);
+        Paciente paciente = PacienteMapper.getEntidade(dto);
+        Endereco endereco = EnderecoMapper.getEntidade(dto.getEndereco());
+        paciente.setIdEndereco(repository.getEnderecoRepository().inserir(endereco).getId());
+        paciente.setId(repository.getPessoaRepository().inserir(paciente).getId());
+        repository.getPacienteRepository().inserir(paciente);
+        ConexaoBD.commit();
+        ConexaoBD.fecharConexao();
         return paciente;
     }
     
     @Override
     public Paciente acharPorId(Long id) throws BancoDadosExcecao {
-        ConnectionFactory.abrirConexao();
-        try {
-            return repository.getPacienteRepository().acharPorId(id);
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
-        } finally {
-            ConnectionFactory.fecharConexao();
-        }
+        ConexaoBD.abrirConexao();
+        Paciente paciente = repository.getPacienteRepository().acharPorId(id);
+        ConexaoBD.fecharConexao();
+        return paciente;
     }
     
     @Override
     public List<ListPacienteDTO> acharTodos() throws BancoDadosExcecao {
-        ConnectionFactory.abrirConexao();
-        try {
-            return PacienteMapper.getLitDTO(repository.getPacienteRepository().acharTodos());
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
-        } finally {
-            ConnectionFactory.fecharConexao();
-        }
+        ConexaoBD.abrirConexao();
+        List<Paciente> pacientes = repository.getPacienteRepository().acharTodos();
+        ConexaoBD.fecharConexao();
+        return PacienteMapper.getListaDTO(pacientes);
     }
 }

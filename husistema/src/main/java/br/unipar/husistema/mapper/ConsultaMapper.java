@@ -6,7 +6,7 @@ import br.unipar.husistema.entity.Consulta;
 
 public class ConsultaMapper {
     
-    public static Consulta getEntity(CancelarConsultaDTO dto) {
+    public static Consulta getEntidade(CancelarConsultaDTO dto) {
         return new Consulta(
                 null, 
                 null, 
@@ -17,7 +17,7 @@ public class ConsultaMapper {
                 null);
     }
     
-    public static Consulta getEntity(InserirConsultaDTO dto) {
+    public static Consulta getEntidade(InserirConsultaDTO dto) {
         return new Consulta(
                 null, 
                 dto.getDataHorario(), 

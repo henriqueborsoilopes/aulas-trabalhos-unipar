@@ -8,7 +8,7 @@ import br.unipar.husistema.dto.InserirPacienteDTO;
 import br.unipar.husistema.dto.ListMedicoDTO;
 import br.unipar.husistema.dto.ListPacienteDTO;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
-import br.unipar.husistema.service.exception.ValidacaoExcecao;
+import br.unipar.husistema.service.exception.ValidarExcecao;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebResult;
@@ -19,28 +19,28 @@ import java.util.List;
 public interface IHUSistemaResource {
        
     @WebMethod(operationName = "atualizar_usuario", action = "")
-    public void atualizarUsuario(@WebParam(header = true, name = "id_usuario") Long id_usuario, @WebParam(header = true, name = "id_endereco") Long id_endereco, @WebParam(name = "usuario") AtualizarPessoaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
+    public void atualizarUsuario(@WebParam(header = true, name = "id_usuario") Long id_usuario, @WebParam(header = true, name = "id_endereco") Long id_endereco, @WebParam(name = "usuario") AtualizarPessoaDTO dto) throws ValidarExcecao;
       
     @WebMethod(operationName = "inativar_usuario")
-    public void inativarUsuario(@WebParam(header = true, name = "id_usuario") Long id_usuario) throws BancoDadosExcecao;
+    public void inativarUsuario(@WebParam(header = true, name = "id_usuario") Long id_usuario) throws ValidarExcecao;
     
-    @WebMethod(operationName = "salvar_medico")
-    public void inserirMedico(@WebParam(name = "usuario") InserirMedicoDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
+    @WebMethod(operationName = "inserir_medico")
+    public void inserirMedico(@WebParam(name = "medico") InserirMedicoDTO dto) throws ValidarExcecao;
     
     @WebMethod(operationName = "listar_medico")
     @WebResult(name = "medico")
     public List<ListMedicoDTO> acharTodosMedicos() throws BancoDadosExcecao;
  
-    @WebMethod(operationName = "salvar_paciente")
-    public void inserirPaciente(@WebParam(name = "usuario") InserirPacienteDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
+    @WebMethod(operationName = "inserir_paciente")
+    public void inserirPaciente(@WebParam(name = "paciente") InserirPacienteDTO dto) throws ValidarExcecao;
     
     @WebMethod(operationName = "listar_paciente")
     @WebResult(name = "paciente")
     public List<ListPacienteDTO> acharTodosPacientes() throws BancoDadosExcecao;
   
     @WebMethod(operationName = "salvar_consulta")
-    public void inserirConsulta(@WebParam(name = "consulta") InserirConsultaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
+    public void inserirConsulta(@WebParam(name = "consulta") InserirConsultaDTO dto) throws ValidarExcecao;
         
     @WebMethod(operationName = "cancelar_consulta")
-    public void cancelarConsulta(@WebParam(header = true, name = "id_consulta") Long id, @WebParam(name = "consulta") CancelarConsultaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
+    public void cancelarConsulta(@WebParam(header = true, name = "id_consulta") Long id, @WebParam(name = "consulta") CancelarConsultaDTO dto) throws ValidarExcecao;
 }

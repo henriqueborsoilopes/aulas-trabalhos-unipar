@@ -3,17 +3,14 @@ package br.unipar.husistema.service.imple;
 import br.unipar.husistema.dto.CancelarConsultaDTO;
 import br.unipar.husistema.dto.InserirConsultaDTO;
 import br.unipar.husistema.entity.Consulta;
-import br.unipar.husistema.factory.ConnectionFactory;
 import br.unipar.husistema.mapper.ConsultaMapper;
 import br.unipar.husistema.service.exception.BancoDadosExcecao;
-import br.unipar.husistema.service.exception.ValidacaoExcecao;
-import br.unipar.husistema.service.validation.ConsultaValidacao;
-import java.sql.SQLException;
+import br.unipar.husistema.service.exception.ValidarExcecao;
 import java.time.LocalDateTime;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import br.unipar.husistema.service.IConsultaService;
 import br.unipar.husistema.factory.IRepositoryFactory;
+import br.unipar.husistema.service.connection.ConexaoBD;
+import br.unipar.husistema.service.validation.Validar;
 
 public class ConsultaServiceImple implements IConsultaService {
     
@@ -24,78 +21,59 @@ public class ConsultaServiceImple implements IConsultaService {
     }
 
     @Override
-    public Consulta inserir(InserirConsultaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {
-        ConnectionFactory.abrirConexao();
-        ConnectionFactory.manterConexaoAberta(true);
-        ConnectionFactory.autoCommit(false);
-        ConsultaValidacao.validarConsulta(dto);
-        Consulta consulta = ConsultaMapper.getEntity(dto);
-        try {
-            consulta = repository.getConsultaRepository().inserir(consulta);
-            ConnectionFactory.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
-        } finally {
-            ConnectionFactory.fecharConexao();
-        }
+    public Consulta inserir(InserirConsultaDTO dto) throws ValidarExcecao {
+        ConexaoBD.abrirConexao();
+        ConexaoBD.manterConexaoAberta(true);
+        ConexaoBD.autoCommit(false);
+        Validar.consulta(dto);
+        Consulta consulta = ConsultaMapper.getEntidade(dto);
+        consulta = repository.getConsultaRepository().inserir(consulta);
+        ConexaoBD.commit();
+        ConexaoBD.fecharConexao();
         return consulta;
     }
     
     @Override
-    public boolean cansultarAgendamentoPaciente(Long id_paciente, LocalDateTime data) throws BancoDadosExcecao {
-        ConnectionFactory.abrirConexao();
-        try {
-            return repository.getConsultaRepository().cansultarAgendamentoPaciente(id_paciente, data);
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
-        } finally {
-            ConnectionFactory.fecharConexao();
-        }
+    public boolean consultarAgendamentoPaciente(Long id_paciente, LocalDateTime data) throws BancoDadosExcecao {
+        ConexaoBD.abrirConexao();
+        boolean resultado = repository.getConsultaRepository().cansultarAgendamentoPaciente(id_paciente, data);
+        ConexaoBD.fecharConexao();
+        return resultado;
     }
     
     @Override
-    public boolean cansultarAgendamentoMedico(LocalDateTime data, Long id_medico) throws BancoDadosExcecao {
-        ConnectionFactory.abrirConexao();
-        try {
-            return repository.getConsultaRepository().cansultarAgendamentoMedico(data, id_medico);
-        } catch ( SQLException ex) {
-            Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
-        } finally {
-            ConnectionFactory.fecharConexao();
-        }
+    public boolean consultarAgendamentoMedico(LocalDateTime data, Long id_medico) throws BancoDadosExcecao {
+        ConexaoBD.abrirConexao();
+        boolean resultado = repository.getConsultaRepository().cansultarAgendamentoMedico(data, id_medico);
+        ConexaoBD.fecharConexao();
+        return resultado;
     }
     
     @Override
-    public LocalDateTime cansultarDataConsulta(Long id_consulta) throws BancoDadosExcecao {
-        ConnectionFactory.abrirConexao();
-        try {
-            return repository.getConsultaRepository().cansultarDataConsulta(id_consulta);
-        } catch ( SQLException ex) {
-            Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
-        } finally {
-            ConnectionFactory.fecharConexao();
-        }
+    public LocalDateTime consultarDataConsulta(Long id_consulta) throws BancoDadosExcecao {
+        ConexaoBD.abrirConexao();
+        LocalDateTime data = repository.getConsultaRepository().cansultarDataConsulta(id_consulta);
+        ConexaoBD.fecharConexao();
+        return data;
     }
     
     @Override
-    public void cancelar(Long id, CancelarConsultaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {
-        ConnectionFactory.abrirConexao();
-        ConnectionFactory.manterConexaoAberta(true);
-        ConnectionFactory.autoCommit(false);
-        ConsultaValidacao.validarCancelamentoConsulta(id, dto);
-        Consulta consulta = ConsultaMapper.getEntity(dto);
-        try {
-            repository.getConsultaRepository().cancelar(id, consulta);
-            ConnectionFactory.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaServiceImple.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
-        } finally {
-            ConnectionFactory.fecharConexao();
-        }
+    public void cancelar(Long id, CancelarConsultaDTO dto) throws BancoDadosExcecao, ValidarExcecao {
+        ConexaoBD.abrirConexao();
+        ConexaoBD.manterConexaoAberta(true);
+        ConexaoBD.autoCommit(false);
+        Validar.cancelamentoConsulta(id, dto);
+        Consulta consulta = ConsultaMapper.getEntidade(dto);
+        repository.getConsultaRepository().cancelar(id, consulta);
+        ConexaoBD.commit();
+        ConexaoBD.fecharConexao();
+    }
+
+    @Override
+    public boolean temConsultaAgendada(Long id_pessoa) throws BancoDadosExcecao {
+        ConexaoBD.abrirConexao();
+        boolean resultado = repository.getConsultaRepository().temConsultaAgendada(id_pessoa);
+        ConexaoBD.fecharConexao();
+        return resultado;
     }
 }

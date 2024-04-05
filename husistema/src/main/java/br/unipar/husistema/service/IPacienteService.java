@@ -3,13 +3,12 @@ package br.unipar.husistema.service;
 import br.unipar.husistema.dto.InserirPacienteDTO;
 import br.unipar.husistema.dto.ListPacienteDTO;
 import br.unipar.husistema.entity.Paciente;
-import br.unipar.husistema.service.exception.BancoDadosExcecao;
-import br.unipar.husistema.service.exception.ValidacaoExcecao;
+import br.unipar.husistema.service.exception.ValidarExcecao;
 import java.util.List;
 
 public interface IPacienteService {
     
-    public Paciente inserir(InserirPacienteDTO dto) throws BancoDadosExcecao, ValidacaoExcecao;
-    public Paciente acharPorId(Long id) throws BancoDadosExcecao;
-    public List<ListPacienteDTO> acharTodos() throws BancoDadosExcecao;
+    public Paciente inserir(InserirPacienteDTO dto) throws ValidarExcecao;
+    public Paciente acharPorId(Long id);
+    public List<ListPacienteDTO> acharTodos();
 }

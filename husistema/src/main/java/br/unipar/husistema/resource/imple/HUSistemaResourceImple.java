@@ -9,54 +9,53 @@ import br.unipar.husistema.dto.ListMedicoDTO;
 import br.unipar.husistema.dto.ListPacienteDTO;
 import br.unipar.husistema.factory.imple.ServiceFactoryImple;
 import br.unipar.husistema.resource.IHUSistemaResource;
-import br.unipar.husistema.service.exception.BancoDadosExcecao;
-import br.unipar.husistema.service.exception.ValidacaoExcecao;
+import br.unipar.husistema.service.exception.ValidarExcecao;
 import jakarta.jws.WebService;
 import java.util.List;
 import br.unipar.husistema.factory.IServiceFactory;
 
-@WebService(serviceName = "resource", endpointInterface = "br.unipar.husistema.resource.IHUSistemaResource")
+@WebService(serviceName = "hu_sistema_resource", endpointInterface = "br.unipar.husistema.resource.IHUSistemaResource")
 public class HUSistemaResourceImple implements IHUSistemaResource {
     
     private final IServiceFactory service = new ServiceFactoryImple();
     
     @Override
-    public void atualizarUsuario(Long id_usuario, Long id_endereco, AtualizarPessoaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {
+    public void atualizarUsuario(Long id_usuario, Long id_endereco, AtualizarPessoaDTO dto) throws ValidarExcecao {
         service.getPessoaService().atualizar(id_usuario, id_endereco, dto);
     }
     
     @Override
-    public void inativarUsuario(Long id) throws BancoDadosExcecao {
+    public void inativarUsuario(Long id) throws ValidarExcecao {
         service.getPessoaService().inativar(id);
     }
     
     @Override
-    public void inserirMedico(InserirMedicoDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {
+    public void inserirMedico(InserirMedicoDTO dto) throws ValidarExcecao {
         service.getMedicoService().inserir(dto);
     }
 
     @Override
-    public List<ListMedicoDTO> acharTodosMedicos() throws BancoDadosExcecao {
+    public List<ListMedicoDTO> acharTodosMedicos() {
         return service.getMedicoService().acharTodos();
     }
     
     @Override
-    public void inserirPaciente(InserirPacienteDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {
+    public void inserirPaciente(InserirPacienteDTO dto) throws ValidarExcecao {
         service.getPacienteService().inserir(dto);
     }
 
     @Override
-    public List<ListPacienteDTO> acharTodosPacientes() throws BancoDadosExcecao {
+    public List<ListPacienteDTO> acharTodosPacientes() {
         return service.getPacienteService().acharTodos();
     }
 
     @Override
-    public void inserirConsulta(InserirConsultaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {
+    public void inserirConsulta(InserirConsultaDTO dto) throws ValidarExcecao {
         service.getConsultaService().inserir(dto);
     }
 
     @Override
-    public void cancelarConsulta(Long id, CancelarConsultaDTO dto) throws BancoDadosExcecao, ValidacaoExcecao {
+    public void cancelarConsulta(Long id, CancelarConsultaDTO dto) throws ValidarExcecao {
         service.getConsultaService().cancelar(id, dto);
     }
 }

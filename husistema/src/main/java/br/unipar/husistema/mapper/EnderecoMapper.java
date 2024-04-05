@@ -5,7 +5,7 @@ import br.unipar.husistema.entity.Endereco;
 
 public class EnderecoMapper {
     
-    public static Endereco getEntity(EnderecoDTO dto) {
+    public static Endereco getEntidade(EnderecoDTO dto) {
         return new Endereco(
                 null, 
                 dto.getLogradouro(), 

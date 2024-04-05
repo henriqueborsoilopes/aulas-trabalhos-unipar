@@ -408,55 +408,42 @@
   <xs:complexType name="salvar_medicoResponse">
     <xs:sequence/>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint></con:endpoints><con:operation id="05cd8a37-ecf4-4a8e-bc6a-b8a587980a2e" isOneWay="false" action="" name="atualizar_usuario" bindingOperationName="atualizar_usuario" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="21de91b3-ef9d-47b9-b7b7-fde235a16fe8" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint></con:endpoints><con:operation id="05cd8a37-ecf4-4a8e-bc6a-b8a587980a2e" isOneWay="false" action="" name="atualizar_usuario" bindingOperationName="atualizar_usuario" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="21de91b3-ef9d-47b9-b7b7-fde235a16fe8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
    <soapenv:Header>\r
-      <res:id_endereco>?</res:id_endereco>\r
-      <res:id_usuario>?</res:id_usuario>\r
+      <res:id_endereco>15</res:id_endereco>\r
+      <res:id_usuario>15</res:id_usuario>\r
    </soapenv:Header>\r
    <soapenv:Body>\r
       <res:atualizar_usuario>\r
-         <!--Optional:-->\r
          <usuario>\r
-            <!--Optional:-->\r
-            <endereco>\r
-               <!--Optional:-->\r
-               <bairro>?</bairro>\r
-               <!--Optional:-->\r
-               <cep>?</cep>\r
-               <!--Optional:-->\r
-               <cidade>?</cidade>\r
-               <!--Optional:-->\r
-               <complemento>?</complemento>\r
-               <!--Optional:-->\r
-               <logradouro>?</logradouro>\r
-               <!--Optional:-->\r
-               <numero>?</numero>\r
-               <!--Optional:-->\r
-               <uf>?</uf>\r
-            </endereco>\r
-            <!--Optional:-->\r
-            <nome>?</nome>\r
-            <!--Optional:-->\r
-            <telefone>?</telefone>\r
+            <endereco>
+               <bairro>Alto Alegre</bairro>
+               <cep>00000000</cep>
+               <cidade>Catanduvas</cidade>
+               <complemento>Casa</complemento>
+               <logradouro>Rua Dom Pedro II</logradouro>
+               <numero>84</numero>
+               <uf>RG</uf>
+            </endereco>
+            <nome>Paula</nome>
+            <telefone>45988888888</telefone>
          </usuario>\r
       </res:atualizar_usuario>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/atualizar_usuarioRequest"/></con:call></con:operation><con:operation id="70c5ed47-5f5e-4e11-912d-39b09a24e928" isOneWay="false" action="" name="cancelar_consulta" bindingOperationName="cancelar_consulta" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3806593c-ce58-4491-9683-917476e05aed" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/atualizar_usuarioRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="70c5ed47-5f5e-4e11-912d-39b09a24e928" isOneWay="false" action="" name="cancelar_consulta" bindingOperationName="cancelar_consulta" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3806593c-ce58-4491-9683-917476e05aed" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
    <soapenv:Header>\r
-      <res:id_consulta>?</res:id_consulta>\r
+      <res:id_consulta>61</res:id_consulta>\r
    </soapenv:Header>\r
    <soapenv:Body>\r
       <res:cancelar_consulta>\r
-         <!--Optional:-->\r
          <consulta>\r
-            <!--Optional:-->\r
-            <descriCancelamento>?</descriCancelamento>\r
+            <descriCancelamento>Paciente não pode comparecer</descriCancelamento>\r
          </consulta>\r
       </res:cancelar_consulta>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/cancelar_consultaRequest"/></con:call></con:operation><con:operation id="763b363e-9cdb-4139-aaa9-02f1f6a11b74" isOneWay="false" action="" name="inativar_usuario" bindingOperationName="inativar_usuario" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="924ee536-9403-43f4-9ba1-7403e2395418" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/cancelar_consultaRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="763b363e-9cdb-4139-aaa9-02f1f6a11b74" isOneWay="false" action="" name="inativar_usuario" bindingOperationName="inativar_usuario" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="924ee536-9403-43f4-9ba1-7403e2395418" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
    <soapenv:Header>\r
-      <res:id_usuario>?</res:id_usuario>\r
+      <res:id_usuario>13</res:id_usuario>\r
    </soapenv:Header>\r
    <soapenv:Body>\r
       <res:inativar_usuario/>\r
@@ -466,96 +453,64 @@
    <soapenv:Body>\r
       <res:listar_medico/>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/listar_medicoRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="4a729d7c-7f1e-4e2f-8827-3048893f3568" isOneWay="false" action="" name="listar_paciente" bindingOperationName="listar_paciente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c6b384c3-e658-4537-8ce7-e71b380bf686" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/listar_medicoRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="4a729d7c-7f1e-4e2f-8827-3048893f3568" isOneWay="false" action="" name="listar_paciente" bindingOperationName="listar_paciente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c6b384c3-e658-4537-8ce7-e71b380bf686" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <res:listar_paciente/>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/listar_pacienteRequest"/></con:call></con:operation><con:operation id="992e150f-583e-4793-a0f9-8ef79956b1b0" isOneWay="false" action="" name="salvar_consulta" bindingOperationName="salvar_consulta" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="67168139-6c8e-4bb7-bb42-e93d17c990bc" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/listar_pacienteRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="992e150f-583e-4793-a0f9-8ef79956b1b0" isOneWay="false" action="" name="salvar_consulta" bindingOperationName="salvar_consulta" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="67168139-6c8e-4bb7-bb42-e93d17c990bc" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <res:salvar_consulta>\r
-         <!--Optional:-->\r
          <consulta>\r
-            <!--Optional:-->\r
-            <data>?</data>\r
-            <!--Optional:-->\r
-            <hora>?</hora>\r
-            <!--Optional:-->\r
-            <medicoId>?</medicoId>\r
-            <!--Optional:-->\r
-            <pacienteId>?</pacienteId>\r
+            <data>2024-04-05</data>\r
+            <hora>08:00</hora>\r
+            <medicoId>14</medicoId>\r
+            <pacienteId>15</pacienteId>\r
          </consulta>\r
       </res:salvar_consulta>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/salvar_consultaRequest"/></con:call></con:operation><con:operation id="8d3ba55d-074b-49c8-8320-374e9e8426da" isOneWay="false" action="" name="salvar_medico" bindingOperationName="salvar_medico" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="7966b561-a8ac-44ef-9768-77bc7f31d2ce" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/salvar_consultaRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="8d3ba55d-074b-49c8-8320-374e9e8426da" isOneWay="false" action="" name="salvar_medico" bindingOperationName="salvar_medico" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="7966b561-a8ac-44ef-9768-77bc7f31d2ce" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <res:salvar_medico>\r
-         <!--Optional:-->\r
          <usuario>\r
-            <!--Optional:-->\r
-            <crm>?</crm>\r
-            <!--Optional:-->\r
-            <email>?</email>\r
-            <!--Optional:-->\r
-            <endereco>\r
-               <!--Optional:-->\r
-               <bairro>?</bairro>\r
-               <!--Optional:-->\r
-               <cep>?</cep>\r
-               <!--Optional:-->\r
-               <cidade>?</cidade>\r
-               <!--Optional:-->\r
-               <complemento>?</complemento>\r
-               <!--Optional:-->\r
-               <logradouro>?</logradouro>\r
-               <!--Optional:-->\r
-               <numero>?</numero>\r
-               <!--Optional:-->\r
-               <uf>?</uf>\r
-            </endereco>\r
-            <!--Optional:-->\r
-            <nome>?</nome>\r
-            <!--Optional:-->\r
-            <telefone>?</telefone>\r
-            <!--Optional:-->\r
-            <tipoEspecialidade>?</tipoEspecialidade>\r
+            <crm>00000/SP</crm>\r
+            <email>jorge@gmail.com</email>\r
+            <endereco>
+               <bairro>Alto Alegre</bairro>
+               <cep>00000000</cep>
+               <cidade>Catanduvas</cidade>
+               <complemento>Casa</complemento>
+               <logradouro>Rua Dom Pedro II</logradouro>
+               <numero>410</numero>
+               <uf>PR</uf>
+            </endereco>
+            <nome>Jorge</nome>\r
+            <telefone>45999999999</telefone>\r
+            <tipoEspecialidade>4</tipoEspecialidade>\r
          </usuario>\r
       </res:salvar_medico>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/salvar_medicoRequest"/></con:call></con:operation><con:operation id="b3ab9def-ba01-42e9-a5cd-803d7a505329" isOneWay="false" action="" name="salvar_paciente" bindingOperationName="salvar_paciente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8a6848c6-e95b-4a38-961b-572c07923dbe" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/salvar_medicoRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="b3ab9def-ba01-42e9-a5cd-803d7a505329" isOneWay="false" action="" name="salvar_paciente" bindingOperationName="salvar_paciente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8a6848c6-e95b-4a38-961b-572c07923dbe" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-plghq4a:8080/husistema/resource</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resource.husistema.unipar.br/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <res:salvar_paciente>\r
-         <!--Optional:-->\r
          <usuario>\r
-            <!--Optional:-->\r
-            <cpf>?</cpf>\r
-            <!--Optional:-->\r
-            <email>?</email>\r
-            <!--Optional:-->\r
+            <cpf>00000000000</cpf>\r
+            <email>paula@gmail.com</email>\r
             <endereco>\r
-               <!--Optional:-->\r
-               <bairro>?</bairro>\r
-               <!--Optional:-->\r
-               <cep>?</cep>\r
-               <!--Optional:-->\r
-               <cidade>?</cidade>\r
-               <!--Optional:-->\r
-               <complemento>?</complemento>\r
-               <!--Optional:-->\r
-               <logradouro>?</logradouro>\r
-               <!--Optional:-->\r
-               <numero>?</numero>\r
-               <!--Optional:-->\r
-               <uf>?</uf>\r
+               <bairro>Alto Alegre</bairro>\r
+               <cep>00000000</cep>\r
+               <cidade>Catanduvas</cidade>\r
+               <complemento>Casa</complemento>\r
+               <logradouro>Rua Dom Pedro II</logradouro>\r
+               <numero>410</numero>\r
+               <uf>PR</uf>\r
             </endereco>\r
-            <!--Optional:-->\r
-            <nome>?</nome>\r
-            <!--Optional:-->\r
-            <telefone>?</telefone>\r
+            <nome>Paula</nome>\r
+            <telefone>45999999999</telefone>\r
          </usuario>\r
       </res:salvar_paciente>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/salvar_pacienteRequest"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://resource.husistema.unipar.br/IHUSistemaResource/salvar_pacienteRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

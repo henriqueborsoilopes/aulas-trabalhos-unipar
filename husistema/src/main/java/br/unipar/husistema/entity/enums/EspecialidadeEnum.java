@@ -31,17 +31,12 @@ public enum EspecialidadeEnum {
         this.descricao = descricao;
     }
     
-    public static EspecialidadeEnum paraEnum(Integer codigo){
-        if (codigo == null) {
-            return null;
-        }
-        
+    public static EspecialidadeEnum paraEnum(Integer codigo){        
         for (EspecialidadeEnum especialidade : EspecialidadeEnum.values()) {
             if (especialidade.getCodigo().equals(codigo)) {
                 return especialidade;
             }
         }
-        
-        throw new IllegalArgumentException("Código inválido! codigo: " + codigo);
+        return null;
     }
 }

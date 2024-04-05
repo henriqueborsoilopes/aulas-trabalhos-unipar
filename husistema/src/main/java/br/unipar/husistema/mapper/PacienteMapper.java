@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class PacienteMapper {
     
-    public static Paciente getEntity(AtualizarPessoaDTO dto) {
+    public static Paciente getEntidade(AtualizarPessoaDTO dto) {
         return new Paciente(
                 null, 
                 dto.getNome(), 
@@ -20,7 +20,7 @@ public class PacienteMapper {
                 null);
     }
     
-    public static Paciente getEntity(InserirPacienteDTO dto) {
+    public static Paciente getEntidade(InserirPacienteDTO dto) {
         return new Paciente(
                 null, 
                 dto.getNome(), 
@@ -36,10 +36,11 @@ public class PacienteMapper {
                 entity.getId(),
                 entity.getNome(), 
                 entity.getEmail(), 
-                entity.getCpf());
+                entity.getCpf(),
+                entity.isAtivo());
     }
 
-    public static List<ListPacienteDTO> getLitDTO(List<Paciente> entities) {
+    public static List<ListPacienteDTO> getListaDTO(List<Paciente> entities) {
         return entities.stream().map(x -> getDTO(x)).collect(Collectors.toList());
     }
 }

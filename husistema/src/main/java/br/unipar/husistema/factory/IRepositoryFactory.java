@@ -6,7 +6,6 @@ import br.unipar.husistema.repository.IMedicoRepository;
 import br.unipar.husistema.repository.IPacienteRepository;
 import br.unipar.husistema.repository.IPessoaRepository;
 
-
 public interface IRepositoryFactory {
     
     IConsultaRepository getConsultaRepository();

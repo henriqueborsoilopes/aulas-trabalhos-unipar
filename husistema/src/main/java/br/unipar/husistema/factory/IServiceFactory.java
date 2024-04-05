@@ -5,7 +5,6 @@ import br.unipar.husistema.service.IMedicoService;
 import br.unipar.husistema.service.IPacienteService;
 import br.unipar.husistema.service.IPessoaService;
 
-
 public interface IServiceFactory {
     
     IConsultaService getConsultaService();
