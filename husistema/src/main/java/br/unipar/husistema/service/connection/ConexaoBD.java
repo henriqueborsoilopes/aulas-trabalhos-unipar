@@ -19,7 +19,9 @@ public class ConexaoBD {
     
     public static void abrirConexao() throws BancoDadosExcecao {
         try {
-            conexao = getDataSource().getConnection();
+            if (conexao == null || conexao.isClosed()) {
+                conexao = getDataSource().getConnection();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ConexaoBD.class.getName()).log(Level.SEVERE, null, ex);
             throw new BancoDadosExcecao("Desculpe, ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.");
